@@ -173,10 +173,6 @@ summary(ecdf(puntajes))
 
 plot.stepfun(puntajes) #Función de distribución
 
-
-#### EJERCICIO QUEDA SUGERIDO
-
-
 #Caso hipergeométrica
 
 #A mano
