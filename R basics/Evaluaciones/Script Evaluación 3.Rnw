@@ -1,0 +1,328 @@
+\documentclass[12pt]{book}
+\usepackage{fullpage}
+\usepackage{gensymb,tikz,braket}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\graphicspath{ {/} }
+\usepackage{xcolor}
+\usepackage{amssymb, amsthm, amsmath, graphics,mathtools}
+\usepackage{tkz-berge}
+ \definecolor{dandelion}{rgb}{0.94, 0.88, 0.19}
+\usepackage{tikz}
+\definecolor{flavescent}{rgb}{0.97, 0.91, 0.56}
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{blue2}{rgb}{0.0, 0.4, 0.65}
+\usepackage{forest}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{shapes.geometric,arrows,fit,matrix,positioning}
+\tikzset
+{
+    treenode/.style = {circle, draw=black, align=center, minimum size=1cm},
+    subtree/.style  = {isosceles triangle, draw=black, align=center, minimum height=0.5cm, minimum width=1cm, shape border rotate=90, anchor=north}
+}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\lstset{backgroundcolor=\color{flavescent}}
+ 
+\title{MAT 3770 Homework 2/19/2018}
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{corollary}{Corollary}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+\usepackage{tkz-berge}
+\usepackage[position=top]{subfig}
+ 
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+ 
+\pagestyle{plain}
+\textwidth=450pt
+\textheight=650pt
+\footskip=30pt
+\voffset= -.7in
+% \hoffset=-.7in
+\newcommand{\QSUM}{\displaystyle\sum_{i = 1}^n}
+\newcommand{\bm}[1]{\begin{bmatrix}
+#1
+\end{bmatrix}}\newcommand{\Ain}[1]{A^{-1}_{#1}}
+\newcommand{\AL}{\Ain{L}}
+\newcommand{\AR}{\Ain{R}}
+\begin{document}
+ 
+\noindent \textbf{\Large Pauta Evaluación 3}\\
+\noindent \small{ Natalie Julian }
+
+
+\section*{Visualización de información sobre fallos cardíacos}
+
+El archivo de datos \texttt{heart} contiene datos de pacientes de distintas variables, incluyendo la muerte o no muerte por falla cardiaca. La información es la siguiente:
+
+\begin{itemize}
+    \item \textbf{age} Indica la edad del paciente en años
+    \item \textbf{diabetes} Indica si el paciente presentaba (1) diabetes o no (0)
+    \item \textbf{high\_pressure} Indica si el paciente presentaba  presión arterial alta (1) o no (0)
+    \item \textbf{serum\_sodium} Indica el nivel de sodio sérico en la sangre
+    \item \textbf{smoking} Indica si el paciente fumaba (1) o no
+    \item \textbf{death} Indica si el paciente presentó muerte por falla cardiaca (1) o no (0)
+\end{itemize}
+
+En las siguientes preguntas se le pide generar gráficos donde se visualicen los datos de manera informativa y adecuada, y además, \textbf{debe entregar inferencias y comentarios para cada uno de estos gráficos}. 
+Puede apoyarse utilizando estadísticas descriptivas o tablas si así lo desea.
+
+\begin{itemize}
+    \item[\textcolor{blue2}{\textbf{a)}}]
+     Con el fin de analizar una posible asociación entre presentar presión alta y presentar muerte por fallo cardiaco, realice dos gráficos, uno para pacientes que no murieron por fallo cardiaco y otro para pacientes que sí murieron por fallo cardiaco. En cada gráfico debe visualizarse la fracción de pacientes que presentaban y no presentaban presión arterial alta. Es decir, para el grupo de pacientes que presentaron fallo cardiaco visualizar la fracción de casos con presión alta y sin presión alta, asimismo para el grupo de pacientes que no presentaron fallo cardiaco. ¿Se observan diferencias? ¿Para qué grupo se observa menor el número de casos con presión arterial alta? Comente.\\
+     
+\end{itemize}
+
+\textcolor{red}{\textbf{Una solución: Gráfico de torta}}\\
+
+\textcolor{magenta}{\footnotesize{\texttt{realizar los gráficos (no es necesario que se muestren los porcentajes, lo importante es que se visualice la fracción, proporción, área de cada grupo), estos gráficos deben llevar título}}} 
+
+<< size="scriptsize">>=
+library(rio)
+heart <- import("heart.csv")
+
+#Para  fallecidos cuántos tuvieron presion alta y cuántos no (porcentaje)
+table(heart$high_pressure[which(heart$death==1)])/nrow(heart[which(heart$death==1),]) 
+
+#Para no fallecidos cuántos tuvieron presion alta y cuántos no (porcentaje)
+table(heart$high_pressure[which(heart$death==0)])/nrow(heart[which(heart$death==0),]) 
+@
+<< size="scriptsize", fig.height=4, fig.width=9>>=
+par(mfrow=c(1,2))
+pie(table(heart$high_pressure[which(heart$death==1)]), 
+    labels=c("No presión arterial alta 59.3%", "Presión arterial alta 40.6%"), 
+    col=rainbow(2, alpha=0.4, start=0.2), 
+    main="Casos de muerte por falla cardiaca", 
+    cex=0.7)
+
+pie(table(heart$high_pressure[which(heart$death==0)]), 
+    labels=c("No presión arterial alta 67.4%", "Presión arterial alta 32.5%"), 
+    col=rainbow(2, alpha=0.4, start=0.2), 
+    main="Casos de no muerte por falla cardiaca", 
+    cex=0.7)
+@
+
+
+\textcolor{magenta}{\footnotesize{\texttt{realizar comentario general entre ambos gráficos}}}\\
+Observando ambos gráficos se observa que para el grupo de no fallecidos existe una mayor proporción de casos sin presión arterial alta, de todas formas esta diferencia no es tan radical.
+
+\textcolor{magenta}{\footnotesize{\texttt{realizar alguna inferencia adicional: relaciona el contexto del ejercicio o genera conjeturas adicionales o complementa con estadísticas adicionales y comenta, etcétera}}}\\
+
+Dado el contexto podríamos pensar que quizás pudiera existir alguna asociación entre el evento morir de falla cardiaca y presentar presión arterial alta. Observando los gráficos y cifras se puede observar que el porcentaje de pacientes con presión arterial alta aumenta aproximadamente un 8\% en los casos de muerte por falla cardiaca, además, en ambos grupos (casos de muerte y no muerte por falla cardiaca) se observa que hay una mayor proporción de casos no presión arterial alta.\\
+
+\textcolor{red}{\textbf{Otra solución con gráfico de barras}}\\
+
+<< size="scriptsize", fig.height=4, fig.width=9>>=
+par(mfrow=c(1,2))
+barplot(table(heart$high_pressure[which(heart$death==1)])/nrow(heart[which(heart$death==1),]), 
+    names.arg=c("Sin", "Con"), 
+    col=rainbow(2, alpha=0.4, start=0.7), 
+    main="Casos de muerte por falla cardiaca",
+    cex.names = 0.8,
+    xlab="Presión arterial alta",
+    space=0.9,
+    density=60)
+
+barplot(table(heart$high_pressure[which(heart$death==0)])/nrow(heart[which(heart$death==0),]), 
+    names.arg=c("Sin", "Con"), 
+    col=rainbow(2, alpha=0.4, start=0.7), 
+    main="Casos de no muerte por falla cardiaca", 
+    cex.names=0.8, 
+    xlab="Presión arterial alta",
+    space=0.9,
+    density=60)
+
+@
+
+
+\textcolor{red}{\textbf{Otra solución (comando plotrix)}}\\
+
+<< size="scriptsize", fig.height=4, fig.width=9>>=
+#install.packages("plotrix") 
+library(plotrix)
+
+frecuencias<-data.frame(table(heart$high_pressure[which(heart$death==1)]))
+
+slices <- frecuencias$Freq 
+
+par(mfrow=c(1,2))
+
+pie3D(slices,labels=c("No presión arterial alta 59.3%", "Presión arterial alta 40.6%"), 
+      main="Muerte por falla cardiaca", col=rainbow(2, alpha=0.4), theta=pi/3, labelcex=0.8)
+
+frecuencias<-data.frame(table(heart$high_pressure[which(heart$death==0)]))
+
+slices <- frecuencias$Freq 
+
+pie3D(slices,labels=c("No presión arterial alta 67.4%", "Presión arterial alta 32.5%"), 
+      main="No muerte por falla cardiaca", col=rainbow(2, alpha=0.4), theta=pi/3, labelcex=0.8)
+
+
+@
+
+
+\begin{itemize}
+    \item[\textcolor{blue2}{\textbf{b)}}] 
+     La edad suele ser una variante de interés en bioestadística, puesto que, a edades avanzadas suelen desencadenarse patologías en los pacientes asociadas al desgaste del cuerpo debida al tiempo. ¿Entre qué rango de edad se encuentran los pacientes? Muestre en un gráfico la distribución de pacientes por edad, es decir, que se observe la cantidad de pacientes para cada una de las edades. Este gráfico debe estar ordenado por frecuencia absoluta de mayor a menor. ¿En qué edades se concentra la mayoría de los pacientes? Comente.\\
+
+\textcolor{red}{\textbf{Una solución}}\\
+
+\textcolor{magenta}{\footnotesize{\texttt{crear un gráfico de barras simple (no ordenado)(debe incluir título)}}}\\
+
+\textcolor{magenta}{\footnotesize{\texttt{crear un gráfico de barras ordenado}}}\\
+
+<< size="scriptsize">>=
+df<-data.frame(table(heart$age))
+
+df<-df[order(df$Freq, decreasing=TRUE),]
+@
+<< size="scriptsize", fig.height=4, fig.width=7>>=
+barplot(df$Freq, 
+        names.arg = df$Var1,
+        main="Conteo de pacientes por edad",
+        las=2,
+        col="royalblue3",
+        density=60,
+        cex.names = 0.7)
+@
+
+
+\textcolor{magenta}{\footnotesize{\texttt{realizar comentario general del gráfico}}}\\
+Se observa mayor cantidad de pacientes en particular en una edad, que sería la edad de 60 años. Se poseen pacientes de diversas edades en los datos, esto se puede notar gráficamente viendo la cantidad de barras.
+
+\textcolor{magenta}{\footnotesize{\texttt{realizar alguna inferencia adicional: relaciona el contexto del ejercicio o genera conjeturas adicionales o complementa con estadísticas adicionales y comenta, etcétera}}}\\
+
+El rango de edad de los pacientes en los datos es de 40 años a 95 años. Las edades con mayor número de pacientes son 60 años con 35 pacientes, 50 años con 27 pacientes y 65 años con 26 pacientes. Si se comparan las estadísticas de la edad en los grupos de muerte y no muerte por falla cardiaca, se puede ver que por ejemplo la mediana para el grupo no muerte por falla cardiaca es de 60 mientras que para el grupo de muerte por falla cardiaca es de 65, podemos decir que la edad del 50\% de personas del grupo de no muerte por falla cardiaca se encuentra debajo de la edad del 50\% del grupo muerte por falla cardiaca.  
+
+
+<< size="scriptsize", fig.height=4, fig.width=7>>=
+head(df)
+
+range(heart$age)
+
+range(df$Freq)
+
+summary(heart$age)
+
+summary(heart$age[which(heart$death==0)])
+summary(heart$age[which(heart$death==1)])
+@
+
+
+    \item[\textcolor{blue2}{\textbf{c)}}] 
+    Interesa visualizar los niveles de sodio sérico en la sangre para el grupo de pacientes con presión arterial alta y pacientes sin presión arterial alta, de modo de observar y determinar si existen diferencias. Realice un gráfico en el que se pueda diferenciar los niveles de sodio sérico para ambos grupos (presión arterial alta y no presión arterial alta), en este gráfico deben observarse los cuartiles de los niveles de sodio sérico para cada grupo, de modo que puedan compararse. ¿Observa diferencias? Comente.\\
+
+\textcolor{red}{\textbf{Una solución:}}\\
+
+\textcolor{magenta}{\footnotesize{\texttt{realizar ambos gráficos, idealmente juntos para permitir comparaciones}}}\\
+
+
+<< size="scriptsize", fig.height=6, fig.width=7>>=
+boxplot(heart$serum_sodium~heart$high_pressure, 
+        xlab="", 
+        ylab="Nivel de sodio sérico", 
+        main="Nivel de sodio sérico por grupo", 
+        names=c("Sin presión arterial alta", "Con presión arterial alta"),
+        col=rainbow(2, alpha=0.3, start=0.9),
+        pch=19)
+
+@
+
+
+\textcolor{magenta}{\footnotesize{\texttt{comentar sobre el gráfico}}}\\
+
+En el gráfico se puede ver que ambos boxplots se encuentran bastante alineados, lo que quizás podría decir que no hay muchas diferencias en el nivel de sodio sérico para el grupo de presión arterial alta y no presión arterial alta. Al menos en el centro de sus cajas (mediana) se ven muy similares. También es posible ver que el rango que recorre el sodio sérico es de 110 a 150 aproximadamente, tomando para el grupo de presión arterial alta valores de aproximadamente 125 a 150 (rango está más acotado a valores altos). 
+
+<< size="scriptsize", fig.height=6, fig.width=7>>=
+median(heart$serum_sodium[which(heart$death==0)])
+median(heart$serum_sodium[which(heart$death==1)])
+@
+
+
+\textcolor{magenta}{\footnotesize{\texttt{comentar sobre elementos del gráfico, interpretar a qué corresponden, incorporar estadísticas, generar conjeturas, explicar}}}\\
+
+Pueden comentar sobre los outliers, incluso determinar cuáles son. Notar que para el grupo de sin presión arterial alta hay varios outliers inferiores, es decir, valores que se alejan considerablemente del centro de los datos. Para el caso de presión arterial alta se observan 4 outliers, pero estos son inferiores y superiores. 
+    
+        \item[\textcolor{blue2}{\textbf{d)}}] 
+    Al grupo de estudio le interesa conocer más detalles de la distribución del sodio sérico. Realice un gráfico en el que se pueda visualizar la distribución de esta variable por intervalos, en particular utilice 30 intervalos para construir el gráfico. ¿Cómo es la forma de la distribución de los niveles de sodio sérico en la sangre? ¿Observa simetría? Comente. Sobreponga una curva de una distribución normal. Recuerde incluir la leyenda en su gráfico de modo de ser más informativo. Comente. \\
+
+\textcolor{red}{\textbf{Una solución: }}\\
+
+\textcolor{magenta}{\footnotesize{\texttt{hacer el gráfico con todos sus elementos correspondientes}}}\\
+
+<< size="scriptsize", fig.height=4, fig.width=6>>=
+
+hist(heart$serum_sodium, 
+     breaks=20, 
+     freq=FALSE, 
+     col="lightslateblue",
+     main="Histograma de nivel de sodio sérico en la sangre", 
+     xlab="Nivel de Sodio sérico en la sangre")
+
+curve(dnorm(x, 
+            mean=mean(heart$serum_sodium), 
+            sd=sd(heart$serum_sodium)), 
+            col="orange", 
+            lwd=2,add=TRUE)
+
+legend("topleft",
+       legend="Curva Distribución Normal",
+       col="orange",
+       cex=0.8,
+       pch=20)
+
+@
+    
+
+\textcolor{magenta}{\footnotesize{\texttt{comentar lo observado, pueden comentar sobre la forma de la distribución, qué tan simil se observa la curva de la distribución normal, si está sesgada o inclinada, etcétera}}}\\
+
+\end{itemize}
+
+\begin{center}
+\noindent\fcolorbox{dandelion}{flavescent}{%
+    \minipage[t]{\dimexpr1.05\linewidth-2\fboxsep-2\fboxrule\relax}
+    \textcolor{blue2}{\textbf{BONUS) }}
+     Muchas veces más que estudiar la edad del paciente en sí, interesa saber si pertenece a un rango etario u otro, pues se ha visto que por rango etario se esperan comportamientos similares, permitiendo caracterizar a los pacientes mediante categorías basadas en la edad. Agrupe a los pacientes por edad en los siguientes rangos etarios:
+     \begin{itemize}
+         \item Si el paciente tiene entre 40 y 50 años (incluyendo dichos valores) pertenezca al rango etario \textit{Adulto I}
+         \item Si el paciente tiene entre 51 y 65 años (incluyendo dichos valores) pertenezca al rango etario \textit{Adulto II}
+         \item Si el paciente tiene entre 66 y 70 años (incluyendo dichos valores) pertenezca al rango etario \textit{Vejez I}
+         \item Si el paciente tiene más de 70 años pertenezca al rango etario \textit{Vejez II}
+         \item Si no cumple ninguna de las anteriores que pertenezca al rango etario \textit{No especifica}
+     \end{itemize}
+     Muestre en una tabla de doble entrada la cantidad de pacientes que murieron por falla cardiaca por rango etario. Comente.
+    \endminipage}
+\end{center}
+\textcolor{red}{\textbf{Una solución: }}\\
+
+<< size="scriptsize", fig.height=6, fig.width=7>>=
+etario<-ifelse(heart$age>=40&heart$age<=50, "Adulto I", 
+               ifelse(heart$age>=51&heart$age<=65, "Adulto II",
+                      ifelse(heart$age>65&heart$age<=70, "Vejez I",
+                             ifelse(heart$age>70, "Vejez II", "No especifica"))))
+
+
+table(etario, heart$death)
+
+prop.table(table(etario, heart$death)) #Muestra distribucion entre el total
+
+prop.table(table(etario, heart$death), margin=1) #Muestra distribucion por fila
+
+@
+
+
+\textcolor{magenta}{\footnotesize{\texttt{hacer la variable rango etario, se pudo haber usado for, if, else, u otras funciones}}}\\
+
+\textcolor{magenta}{\footnotesize{\texttt{comentar sobre la tabla de doble entrada, se puede ver que la mayor cantidad de personas que falleció por fallo cardiaco pertenecía al grupo Adulto II, pero si se ven en porcentajes por ejemplo, en Vejez II es donde murió mayor proporción de personas por fallo cardiaco. También se puede conjeturar, la idea es comentar.}}}\\
+
+\end{document}

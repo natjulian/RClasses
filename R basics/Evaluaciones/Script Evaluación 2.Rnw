@@ -1,0 +1,295 @@
+\documentclass[12pt]{book}
+\usepackage{fullpage}
+\usepackage{gensymb,tikz,braket}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\graphicspath{ {/} }
+\usepackage{xcolor}
+\usepackage{amssymb, amsthm, amsmath, graphics,mathtools}
+\usepackage{tkz-berge}
+ \definecolor{dandelion}{rgb}{0.94, 0.88, 0.19}
+\usepackage{tikz}
+\definecolor{flavescent}{rgb}{0.97, 0.91, 0.56}
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{blue2}{rgb}{0.0, 0.4, 0.65}
+\usepackage{forest}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{shapes.geometric,arrows,fit,matrix,positioning}
+\tikzset
+{
+    treenode/.style = {circle, draw=black, align=center, minimum size=1cm},
+    subtree/.style  = {isosceles triangle, draw=black, align=center, minimum height=0.5cm, minimum width=1cm, shape border rotate=90, anchor=north}
+}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\lstset{backgroundcolor=\color{flavescent}}
+ 
+\title{MAT 3770 Homework 2/19/2018}
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{corollary}{Corollary}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+\usepackage{tkz-berge}
+\usepackage[position=top]{subfig}
+ 
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+ 
+\pagestyle{plain}
+\textwidth=450pt
+\textheight=650pt
+\footskip=30pt
+\voffset= -.7in
+% \hoffset=-.7in
+\newcommand{\QSUM}{\displaystyle\sum_{i = 1}^n}
+\newcommand{\bm}[1]{\begin{bmatrix}
+#1
+\end{bmatrix}}\newcommand{\Ain}[1]{A^{-1}_{#1}}
+\newcommand{\AL}{\Ain{L}}
+\newcommand{\AR}{\Ain{R}}
+\begin{document}
+ 
+\noindent \textbf{\Large Pauta Evaluación 2}\\
+\noindent \small{  Natalie Julian}
+
+
+\section*{¿Cómo saber si una cuenta es \textit{fake}?}
+Instagram es una red social lanzada al mundo el 10 de Octubre de 2010. La dinámica es simple: los usuarios comparten fotos y videos de forma instantánea, pudiendo interactuar con sus seguidores y amigos. Instagram tiene más de 500 millones de usuarios activos por mes. Sin embargo, una problemática no menor es que existen muchos usuarios que crean cuentas falsas, es decir, son usuarios \textit{Fake}. Generalmente, este tipo de cuentas son creadas con fines maliciosos, como realizar spam, espiar o subir contenido inapropiado a Instagram, desagradable para los demás usuarios de la red social.\\
+\texttt{ }\\
+Usualmente se diseñan algoritmos de detección de perfiles falsos en base a sus características y comportamiento. El archivo \texttt{fake} contiene datos de cuentas de Instagram que el algoritmo ya ha clasificado como \textit{fake} o real:
+
+\begin{itemize}
+    \item \textbf{profilepic} Indica con un 1 si la cuenta tiene foto de perfil o con un 0 si no
+    \item \textbf{description} Indica la cantidad de caracteres usados en la descripción de la cuenta 
+    \item \textbf{private} Indica si la cuenta es privada o pública
+    \item \textbf{posts} Indica la cantidad de publicaciones de la cuenta
+    \item \textbf{followers} Indica la cantidad de seguidores de la cuenta
+    \item \textbf{follows} Indica la cantidad de cuentas seguidas
+    \item \textbf{Fake} Indica si la cuenta correspondía a una cuenta falsa o no
+\end{itemize}
+
+\begin{itemize}
+    \item[\textcolor{blue2}{\textbf{a)}}]  Cargue los datos del archivo \texttt{fake} en R. ¿Qué función utilizó para cargar los datos? ¿En qué paquete viene incorporada esta función? ¿Por qué es necesario cargar paquetes? Comente.\\
+    
+\textcolor{red}{\textbf{Una solución}}
+
+\textcolor{magenta}{\footnotesize{\texttt{cargar y guardar correctamente los datos}}}
+
+\textcolor{magenta}{\footnotesize{\texttt{ decir que la función que carga los datos es import()}}}
+\textcolor{magenta}{\footnotesize{\texttt{ decir que la función viene del paquete rio}}}
+
+<<message=FALSE, size="scriptsize">>=
+library(rio) #Carga la librería/paquete llamado rio
+
+datos<-import("fake.csv") #Se utiliza la función import del paquete rio
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{comentar por qué es necesario cargar paquetes}}}
+
+Es necesario cargar paquetes para poder acceder a funciones que no se encuentran por defecto en RStudio. Muchas veces, funciones más específicas para gráficos u otros.
+
+
+
+    \item[\textcolor{blue2}{\textbf{b)}}]  ¿En qué formato se lee la variable \textit{followers}? ¿Por qué se ha leído en este formato? Realice la modificación correspondiente de manera que el formato sea el adecuado. Verifique que se realizó correctamente la modificación.\\
+
+\textcolor{red}{\textbf{Una solución}}
+
+\textcolor{magenta}{\footnotesize{\texttt{comentar que followers posee un formato de tipo character}}}
+
+<<size="scriptsize">>=
+str(datos$followers) #Muestra el formato de la variable
+@
+
+Ya sabemos que cuando una variable numérica se está leyendo en formato character es porque debe existir texto en algunas de las observaciones. ¿Cuáles?
+
+
+\textcolor{magenta}{\footnotesize{\texttt{comentar que la variable followers toma el valor "Ninguno" por esto se lee en formato character}}}
+
+<<size="scriptsize">>=
+
+#Forma 1: con unique()
+
+unique(datos$followers) #Muestra los valores que toma esta variable
+
+#Forma 2: con table()
+table(datos$followers) #Muestra tabla de frecuencias de esta variable
+@
+
+
+\textcolor{magenta}{\footnotesize{\texttt{ realizar la modificación correspondiente }}}
+
+En este caso, era necesario interpretar que followers contiene la cantidad de seguidores de la cuenta, por lo tanto "Ninguno" corresponde a tener 0 seguidores.
+
+<<size="scriptsize">>=
+datos$followers[which(datos$followers=="Ninguno")]<-0 #Aquellos registros Ninguno los llena con 0
+
+datos$followers<-as.numeric(datos$followers) #Redefine el formato a numerico
+
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{verificar que la variable posee el formato que corresponde}}}
+
+<<size="scriptsize">>=
+str(datos$followers) #Ahora posee el formato correspondiente
+@
+
+
+    \item[\textcolor{blue2}{\textbf{c)}}]  La variable \textit{profilepic} es una variable categórica que indica si la cuenta tiene o no tiene foto de perfil. Sin embargo, está codificada de forma numérica (unos y ceros). ¿Por qué pudiera ser relevante detectar aquellas categorías codificadas numéricamente previo al análisis? ¿Qué errores podrían cometerse si no realizó este alcance? Comente. Recodifique esta variable en las categorías que corresponde. ¿Cuántos usuarios tenían foto de perfil? ¿Cuántos no?\\
+    
+\textcolor{red}{\textbf{Una solución}}
+
+\textcolor{magenta}{\footnotesize{\texttt{comentar por qué es relevante detectar cuáles variables no están codificadas como corresponde}}}
+
+En este caso, en esta variable se indicaba con 0 si no tenía foto de perfil y con 1 si tenía foto de perfil, si no notáramos este detalle podríamos estar calculando erróneamente estadísticas de esta variable que se encuentra codificada con números pero que en realidad corresponde a categorías.
+
+\textcolor{magenta}{\footnotesize{\texttt{recodificar de manera adecuada la variable}}}
+
+<<size="scriptsize">>=
+#Valores 0 indican que no tiene foto de perfil:
+datos$profilepic[which(datos$profilepic==0)]<-"Sin foto de perfil"
+
+#Valores 1 indican que tiene foto de perfil:
+datos$profilepic[which(datos$profilepic==1)]<-"Con foto de perfil"
+@
+
+En este ejercicio es irrelevante si redefinieron la variable o crearon otra nueva, lo importante es que estuviera incluida en los datos fake.
+
+\textcolor{magenta}{\footnotesize{\texttt{ comentar cuántos usuarios o cuentas tenían foto de perfil y cuántos no}}}
+
+<<size="scriptsize">>=
+table(datos$profilepic)
+@
+
+En los datos hay 91 cuentas de Instagram con foto de perfil y 29 sin foto de perfil.
+
+    \item[\textcolor{blue2}{\textbf{d)}}]  Se cree que en general, las cuentas \textit{fake} no suelen tener foto de perfil. Muestre en una tabla cómo se distribuye el tener o no tener foto de perfil en las cuentas \textit{fake} y \textit{reales}. Comente. ¿Le parece que tener foto de perfil asegura que una cuenta sea real?\\
+
+\textcolor{red}{\textbf{Una solución}}
+
+\textcolor{magenta}{\footnotesize{\texttt{ obtener cuántas cuentas fake hay con foto de perfil y sin foto de perfil y lo mismo pero con cuentas reales}}}
+
+
+<<size="scriptsize">>=
+
+#Forma 1: Tabla de dobe entrada:
+table(datos$profilepic, datos$fake)
+
+
+#Forma 2:
+
+table(datos$profilepic[which(datos$fake=="Fake")]) #Filtro cuentas fake y veo tabla de profilepic
+
+table(datos$profilepic[which(datos$fake=="Not Fake")]) #Filtro cuentas reales y veo tabla de profilepic
+
+
+@
+
+
+\textcolor{magenta}{\footnotesize{\texttt{comentar sobre las tablas o valores obtenidos}}}
+
+Hay 29 cuentas fake que no tenían foto de perfil y 31 cuentas fake que tenian foto de perfil. Mientras que las cuentas reales, todas tenian foto de perfil.
+
+
+\textcolor{magenta}{\footnotesize{\texttt{ concluir finalmente si tener foto de perfil asegura que la cuenta sea real}}}
+
+Lo que se puede concluir es que existen cuentas que tenían foto de perfil y que a pesar de esto, eran cuentas fake, por lo tanto no aseguraría realmente el tener foto de perfil que la cuenta sea real.
+
+
+
+   \item[\textcolor{blue2}{\textbf{e)}}]  El cuociente de seguidores entre seguidos de una cuenta es: 
+   $$\text{cuociente}=\frac{\text{followers}}{\text{follows}}$$
+   Este cuociente se utiliza como una variable relevante para clasificar si la cuenta es fake, menores valores del $\text{cuociente}$ indicarían que una cuenta es \textit{fake}. Calcule la variable \textit{cuociente} y agréguela a los datos. ¿Qué rango de valores recorre dicho cuociente para las cuentas fake? ¿y para las cuentas reales? Compare. ¿Por qué tendría sentido realcionar menores valores del cuociente con cuentas fake? ¿Cómo se puede interpretar el cuociente en términos del contexto? Conjeture.\\
+   
+\textcolor{red}{\textbf{Una solución}}
+
+
+   
+\textcolor{magenta}{\footnotesize{\texttt{ calcular el cuociente}}}
+
+<<size="scriptsize">>=
+
+datos$followers/datos$follows
+
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{ agregar a los datos/tabla de datos}}}
+
+
+<<size="scriptsize">>=
+datos$cuociente<-datos$followers/datos$follows 
+
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{calcular rango de valores del cuociente para cuentas fake y reales}}}
+
+
+<<size="scriptsize">>= 
+
+#Forma 1:
+
+summary(datos$cuociente[which(datos$fake=="Fake")])
+summary(datos$cuociente[which(datos$fake=="Not Fake")])
+
+#Forma 2:
+
+range(datos$cuociente[which(datos$fake=="Fake")])
+range(datos$cuociente[which(datos$fake=="Not Fake")])
+
+#Forma 3:
+
+min(datos$cuociente[which(datos$fake=="Fake")]);max(datos$cuociente[which(datos$fake=="Fake")])
+min(datos$cuociente[which(datos$fake=="Not Fake")]);max(datos$cuociente[which(datos$fake=="Not Fake")])
+
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{comentar sobre los rangos}}}
+
+Se puede observar que efectivamente el rango de valores para el cuociente es mayor para las cuentas reales que para las cuentas fake.
+
+\textcolor{magenta}{\footnotesize{\texttt{ conjeturar}}}
+
+Naturalmente, dado que el cuociente corresponde a la cantidad de seguidores respecto a seguidos, como las cuentas fake usualmente se utilizan para realizar spam, espiar u otros fines maliciosos, es natural que no tengan tantos seguidores pero que sí sigan más cuentas. En cuentas reales se esperaría que tengan más seguidores, correspondiente a amistades, familiares u otros.
+
+
+\end{itemize}
+
+
+\textcolor{blue2}{\textbf{BONUS) }}    Instale y cargue el paquete \texttt{dplyr}. Luego corra las siguientes líneas de código:
+
+\begin{verbatim}
+datos %>%
+  group_by(fake) %>%
+   summarise(Min=min(cuociente), 
+             Max=max(cuociente))
+\end{verbatim}
+¿Qué resultado observa? Explique con sus palabras qué cree que realiza cada línea de código para llegar al resultado obtenido. \\
+
+\textcolor{red}{\textbf{Una solución}}
+
+<<size="scriptsize", message=FALSE>>= 
+
+#install.packages("dplyr")
+
+library(dplyr)
+
+datos %>%
+  group_by(fake) %>%
+   summarise(Min=min(cuociente), 
+             Max=max(cuociente))
+
+@
+
+
+\textcolor{magenta}{\footnotesize{\texttt{instalar y cargar el paquete dplyr}}}\\
+\textcolor{magenta}{\footnotesize{\texttt{ notar que entrega los rangos de valores calculados en el item e)}}}\\
+\textcolor{magenta}{\footnotesize{\texttt{dar ideas de lo que realiza el comando, que agrupa por tipo de cuenta y luego calcula minimo y maximo del cuociente}}}
+
+\end{document}

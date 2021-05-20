@@ -1,0 +1,339 @@
+\documentclass[12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{gensymb,tikz,braket}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\graphicspath{ {/} }
+\usepackage{xcolor}
+\usepackage{amssymb, amsthm, amsmath, graphics,mathtools}
+\usepackage{tkz-berge}
+ \definecolor{dandelion}{rgb}{0.94, 0.88, 0.19}
+\usepackage{tikz}
+\definecolor{flavescent}{rgb}{0.97, 0.91, 0.56}
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{blue2}{rgb}{0.0, 0.4, 0.65}
+\usepackage{forest}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{shapes.geometric,arrows,fit,matrix,positioning}
+\tikzset
+{
+    treenode/.style = {circle, draw=black, align=center, minimum size=1cm},
+    subtree/.style  = {isosceles triangle, draw=black, align=center, minimum height=0.5cm, minimum width=1cm, shape border rotate=90, anchor=north}
+}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+ 
+\title{MAT 3770 Homework 2/19/2018}
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{corollary}{Corollary}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+\usepackage{tkz-berge}
+\usepackage[position=top]{subfig}
+ 
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+ 
+\pagestyle{plain}
+\textwidth=450pt
+\textheight=650pt
+\footskip=30pt
+\voffset= -.7in
+% \hoffset=-.7in
+\newcommand{\QSUM}{\displaystyle\sum_{i = 1}^n}
+\newcommand{\bm}[1]{\begin{bmatrix}
+#1
+\end{bmatrix}}\newcommand{\Ain}[1]{A^{-1}_{#1}}
+\newcommand{\AL}{\Ain{L}}
+\newcommand{\AR}{\Ain{R}}
+\begin{document}
+ 
+\noindent \textbf{\Large Pauta Evaluación 1}\\
+\noindent \footnotesize{ Natalie Julian}
+
+
+\section*{Ranking 2020 de smarthphones}
+El sitio web \texttt{kelisto.es} entregó un ranking con los mejores smartphones del mercado de este año. En la siguiente tabla encontrará la información de los smartphones:
+
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+ \textbf{Código} &\textbf{Batería}& \textbf{Frontal} \\
+\hline 
+GalaxyS20Ultra1359&5000& 40\\
+HuaweiP40Pro1099&4200& 32\\
+SamsungZFlip1500&3300&Diez\\
+GalaxyNote101109&3500&10\\
+MotorolaRazr1599&2510&5\\
+Iphone11ProMax1259&3046&12\\
+Xiaomi10Pro1000&5260&20\\
+\hline
+\end{tabular}\\
+\texttt{ }\\
+\texttt{ }\\
+\textbf{Ranking 1}
+\end{center}
+\texttt{Código} incluye el modelo del smartphone y los cuatro últimos dígitos consisten en el precio del teléfono en euros. \texttt{Bateria} indica duración de la batería en mAh (miliamperios/hora) y \texttt{Frontal} indica la cantidad de megapixeles de la cámara frontal del smartphone.
+
+\texttt{ }\\
+Se le pide a usted, analizar las características de los smartphones contenida en la tabla de datos.
+
+\begin{itemize}
+    \item[\textcolor{blue2}{\textbf{a)}}]  Defina los vectores \texttt{codigo}, \texttt{bateria} y \texttt{frontal} con la información de la tabla. ¿De qué tipo es cada vector? ¿por qué es relevante conocer el formato de lectura de un vector?. Explique por qué en \texttt{R} el vector \texttt{frontal} no es leído en formato numérico siendo que contiene información de la cantidad de megapixeles. Realice la modificación pertinente de modo que se lea en el formato adecuado.
+    
+    
+\textcolor{red}{\textbf{Una solución}}
+
+
+\textcolor{magenta}{\footnotesize{\texttt{definir cada vector como corresponda}}}
+
+<<size="scriptsize">>=
+(codigo<-c("GalaxyS20Ultra1359", "HuaweiP40Pro1099", "SamsungZFlip1500", "GalaxyNote101109", 
+           "MotorolaRazr1599", "Iphone11ProMax1259", "Xiaomi10Pro1000"))
+(bateria<-c(5000, 4200, 3300, 3500, 2510, 3046, 5260))
+(frontal<-c(40, 32, "Diez", 10, 5, 12, 20))
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{aplicar función class a cada vector}}}
+
+<<size="scriptsize">>=
+class(codigo)
+class(bateria)
+class(frontal)
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{explicar por qué frontal es leído en formato character}}}
+
+\texttt{R} le asigna a todos los elementos de un vector el mismo formato. Por ende, un vector mixto (compuesto por elementos de distinto tipo) serán leídos en un mismo formato, en este caso, dado que existe el elemento Diez, el vector completo será leído en formato character.
+
+\textcolor{magenta}{\footnotesize{\texttt{aplicar modificación correspondiente al vector frontal}}}
+
+<<size="scriptsize">>=
+#Una manera:
+
+frontal[3]<-"10"
+
+(frontal<-as.numeric(frontal))
+
+#Manera más eficiente vista en ayudantía:
+
+frontal[which(frontal=="Diez")]<-"10"
+
+(frontal<-as.numeric(frontal))
+
+class(frontal)
+
+#Otras funciones que pudieron haberse utilizado para el formato numerico:
+
+as.integer(frontal)
+as.double(frontal)
+
+@
+
+    \item[\textcolor{blue2}{\textbf{b)}}] Extraiga el precio (en euros) en un objeto llamado \texttt{precio}. Asegúrese de que este vector tenga el formato correspondiente. Recalcule el precio en pesos chilenos, considerando la siguiente equivalencia:
+    $$1 \ \text{euro} = 933,72 \ \text{pesos chilenos}$$
+    ¿Qué rango de valores recorren los smartphones (en pesos chilenos)? (puede ser redondeado)
+
+
+\textcolor{red}{\textbf{Una solución}}
+
+\textcolor{magenta}{\footnotesize{\texttt{extraer el precio del vector codigo}}}
+
+<<size="scriptsize">>=
+(precio<-substr(codigo, start=nchar(codigo)-3, stop=nchar(codigo)))
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{redefinir el vector en formato numérico}}}
+
+<<size="scriptsize">>=
+class(precio)
+
+(precio<-as.numeric(precio))  
+
+class(precio)
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{recalcular el precio en pesos chilenos}}}
+
+No es necesario considerar decimales, en pesos chilenos no se utilizan decimales. Pero si lo considera no está erróneo. En este caso, era interesante que notaran que no aparecen los decimales.
+
+<<size="scriptsize">>=
+
+(precio<-933.72*precio) #precio en pesos chilenos
+
+@
+
+Si se hubieran querido mantener los decimales antes de utilizar as.numeric, debe fijarse la cantidad de dígitos a considerar:
+
+<<size="scriptsize">>=
+
+precio<-substr(codigo, start=nchar(codigo)-3, stop=nchar(codigo))
+
+precio<-as.numeric(precio)
+
+(precio<-933.72*precio)
+
+print(precio, digits = 8) #Muestra el vector precio con un decimal
+print(precio, digits = 9) #Muestra el vector precio con dos decimales
+
+options(digits = 9)  #Fija en 9 digitos a los numeros
+
+precio<-substr(codigo, start=nchar(codigo)-3, stop=nchar(codigo))
+
+precio<-as.numeric(precio)
+
+(precio<-933.72*precio)
+
+@
+
+Si hubieran querido eliminar los decimales:
+
+<<size="scriptsize">>=
+(precio<-floor(precio)) #Toma el piso del número
+
+print(precio, digits=10) #Ya no reconoce decimales
+
+precio[which.max(precio)]
+@
+
+
+\textcolor{magenta}{\footnotesize{\texttt{calcular e indicar el rango de precios de los smartphones}}}
+
+<<size="scriptsize">>=
+#Forma 1: Visto en ayudantia
+
+min(precio)
+max(precio)
+
+#Forma 2: Mencionado en clases
+
+summary(precio) 
+
+# Forma 3: Realizado en clases
+
+precio[which.min(precio)]
+
+precio[which.max(precio)]
+
+# Forma 4: Realizado en clases
+
+precio[order(precio)]  #Determinar minimo y maximo
+
+
+# Forma 4 símil a summary
+
+fivenum(precio)
+@
+
+El rango de precios de estos smartphones es de 933.720 y 1.493.018 pesos chilenos.
+
+    \item[\textcolor{blue2}{\textbf{c)}}]  ¿Cuáles son los smartphones de la lista que poseen mayor y menor rendimiento en la batería? ¿Cuál es la cantidad de megapixeles que tienen estos smartphones?
+    
+    
+\textcolor{red}{\textbf{Una solución}}
+
+Para esta pregunta les definí en la tarea que considere mAh la duración de la batería, aunque en estricto rigor, la duración de la bateria de un smartphone no depende solamente de su capacidad de mAh.
+
+\textcolor{magenta}{\footnotesize{\texttt{obtener modelo del smartphone (pudo haberse obtenido antes)}}}
+
+<<size="scriptsize">>=
+(ranking1<-substr(codigo, start=1, stop=nchar(codigo)-4))
+
+@
+
+
+\textcolor{magenta}{\footnotesize{\texttt{identificar cuáles son los smarthpnes con mayor y menor mAh en la batería}}}
+
+<<size="scriptsize">>=
+which.max(bateria)
+which.min(bateria)
+
+ranking1[which.max(bateria)] #Mayor mAh
+ranking1[which.min(bateria)] #Menor mAh
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{ entregar megapixeles para estos telefonos}}}
+
+<<size="scriptsize">>=
+frontal[which.max(bateria)]
+frontal[which.min(bateria)]
+@
+
+    \item[\textcolor{blue2}{\textbf{d)}}]  Ordene los precios respecto a la duración de la batería. En base a los datos,  ¿diría usted que a mayor batería, mayor es el precio del smartphone? Comente.
+    
+    
+\textcolor{red}{\textbf{Una solución}}
+
+\textcolor{magenta}{\footnotesize{\texttt{ ordenar precios de acuerdo a bateria independiente de si es creciente o decreciente}}}
+
+<<size="scriptsize">>=
+precio[order(bateria)] #ordena los precios de menor a mayor mAh
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{ comentar y concluir}}}
+
+No se observa realmente que a mayor mAh mayor precio. Podría conjeturarse que la batería no es un factor incremental en el precio, seguramente se valoran otras características por sobre mAh, por ejemplo, pudidera ser la cámara (trasera o frontal), memoria, etcétera.
+
+   \item[\textcolor{blue2}{\textbf{e)}}]  Otro sitio web propone los siguientes modelos como los mejores del 2020:
+    $$\text{\footnotesize{GalaxyS20Ultra}},  \ \ \text{\footnotesize{Iphone11ProMax}}, \ \ \text{\footnotesize{HuaweiNova5T}}, \ \ \text{\footnotesize{GalaxyA51}}, \ \ \text{\footnotesize{Xiaomi10Pro}}, \ \ \text{\footnotesize{ZTEBladeA7}} $$
+    $$\text{\textbf{Ranking 2}}$$
+    ¿Existen smartphones que aparezcan \textbf{en ambos} rankings? ¿cuáles son los smartphones que aparecen en \textbf{uno y solo en un ranking}? Explique brevemente cómo los determinó.
+    
+\textcolor{red}{\textbf{Una solución}}
+
+\textcolor{magenta}{\footnotesize{\texttt{definir el vector con los modelos del ranking2}}}
+<<size="scriptsize">>=
+(ranking2<-c("GalaxyS20Ultra","Iphone11ProMax","HuaweiNova5T","GalaxyA51","Xiaomi10Pro","ZTEBladeA7"))
+
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{ obtener la intersección de estos dos conjuntos (indicar que la intersección corresponde a los elementos que se encuentran tanto en el primer como en el segundo ranking)}}}
+
+<<size="scriptsize">>=
+
+intersect(ranking1,ranking2) #Intersect de ambos rankings2 
+
+length(intersect(ranking1, ranking2)) #Cuantos smartphones aparecen en ambos rankings?
+
+@
+
+\textcolor{magenta}{\footnotesize{\texttt{obtener la diferencia simétrica de conjuntos (indicar que la diferencia simétrica corresponde justamente a aquellos modelos que no se encuentran en ambos rankings simultáneamente)}}}
+
+<<size="scriptsize">>=
+#Opción 1
+union(setdiff(ranking1, ranking2), setdiff(ranking2, ranking1))
+
+#Opción 2
+setdiff(union(ranking1, ranking2), intersect(ranking1, ranking2))
+
+@
+
+\end{itemize}
+
+\begin{center}
+\noindent\fcolorbox{dandelion}{flavescent}{%
+    \minipage[t]{\dimexpr1.05\linewidth-2\fboxsep-2\fboxrule\relax}
+    \textcolor{blue2}{\textbf{BONUS)}}
+    U- cliente se encuentra indeciso, quiere regalarle un smartphone a su niet- a quien le gusta muchísimo sacarse selfies. Su teléfono anterior tenía 15 megapixeles de cámara frontal, por lo que el cliente quisiera regalarle uno con mejor cámara frontal que el anterior. Determine cuáles son los celulares del \textbf{Ranking 1} que poseen mayor cantidad de megapixeles que el celular antiguo de su niet-, además, para estos teléfonos, indíque el precio en pesos chilenos. ¿Cuál es la opción más conveniente?
+
+    \endminipage}
+\end{center}
+\textcolor{red}{\textbf{Una solución}}\\
+\textcolor{magenta}{\footnotesize{\texttt{aplicar filtro frontal>15 y determinar el modelo y el precio}}}
+
+<<size="scriptsize">>=
+ranking1[which(frontal>15)]
+
+precio[which(frontal>15)]
+@
+\texttt{ }\\
+\textcolor{magenta}{\footnotesize{\texttt{indicar cuál es el celular más conveniente (en términos de precio)}}}\\
+Aquellos teléfonos que poseen más de 15 megapixeles de cámara frontal son los modelos Galaxy S20 Ultra, Huawei P40 Pro y Xiaomi 10 Pro. Donde el teléfono más conveniente en términos de precio (aquél con menor precio) es el Xiaomi 10 Pro, por lo tanto, se le recomienda al abuelo dicho smartphone.
+
+\end{document}
