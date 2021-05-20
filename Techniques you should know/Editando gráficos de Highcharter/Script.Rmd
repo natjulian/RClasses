@@ -1,0 +1,414 @@
+---
+title: "Creación de gráficos interactivos, visualizaciones en análisis de casos"
+author: "Natalie Julian najulian@uc.cl"
+date: "25 de Junio"
+output:
+  rmdformats::readthedown:
+    highlight: kate
+---
+
+
+```{r setup, echo=FALSE, cache=FALSE, message=FALSE, warning=FALSE}
+#install.packages("knitr")
+library(knitr)
+
+#install.packages("rmdformats")
+library(rmdformats)
+
+## Global options")
+opts_chunk$set(prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+```
+
+# Análisis de caso 1: ¿Cuál vino recomendar?
+
+Una empresa vitivinícola muy exitosa en la venta de vinos ofrece 177 vinos distintos a sus clientes. La industria ha realizado análisis de seguimiento a sus clientes y ha podido concluir que en general, sus clientes compran vinos muy similares entre sí, por lo que le gustaría poder detectar relaciones entre las variables e idealmente una agrupación de vinos, de modo de sugerir de manera personalizada a cada cliente un vino de la misma categoría o grupo al último que compró, y así mejorar la experiencia de sus valiosos clientes.
+
+## Información disponible en la base de datos *vinos*
+
+
+Se poseen características de los vinos respecto a su composición y color:
+
+```{r, echo=TRUE}
+
+#install.packages("readxl")
+library(readxl)
+
+vinos <- read_excel("vinos.xlsx")  #Carga la data vinos
+
+#install.packages("tidyverse")
+library(tidyverse)
+
+glimpse(vinos)  #Formato de las variables
+```
+
+Importante verificar que ningún código o ID de vino se repita, es decir, que los registros son únicos y que cada observación corresponde a un vino:
+
+```{r, echo=TRUE}
+table(table(vinos$Codigo))
+```
+
+Efectivamente, todos los registros corresponden a vinos diferentes. 
+
+
+# Preguntas de investigación
+
+Preguntas que resultan de interés para resolver el caso:
+
+- **¿Cómo se relacionan las distintas características de los vinos?**
+
+- **¿Cómo agrupar los vinos en términos de similitud en sus características?**
+
+
+## **¿Cómo se relacionan las distintas características de los vinos?**
+
+Dado que las variables son de tipo cuantitativa continuas, resulta interesante observar la matriz de correlación de las características de los vinos:
+
+```{r, echo=TRUE}
+
+#install.packages("highcharter")
+library(highcharter)  #Gráficos interactivos
+
+hchart(cor(vinos[,-1]))
+
+```
+
+Es posible mejorar el gráfico anterior añadiendo especificaciones de color, título, ejes, etcétera:
+
+```{r, echo=TRUE}
+#install.packages("tidyverse")
+library(tidyverse)    
+
+#install.packages("dplyr")
+library(dplyr)   
+
+(data <- cor(vinos[,-1]) %>% 
+              as.data.frame() %>%
+              rownames_to_column(var="col1") %>% 
+              pivot_longer(cols=names(vinos[,-1]),
+                           names_to="col2",
+                           values_to='cor'))
+
+
+hchart(data,"heatmap",hcaes(x=col1,y=col2,value=round(cor,2)), name="Correlación entre características",
+               dataLabels = list(enabled = TRUE)) %>%
+   hc_colorAxis(stops=list( list(0, '#D7BFE8'),
+                    list(0.5, '#3CC4C4'),
+                    list(1, '#D01459')),min=-1,max=1) %>%
+  hc_title(text="Correlación de características en una carta de vinos", align = "center", x=25) %>% 
+  hc_xAxis(title=" ") %>% 
+  hc_yAxis(title=" ") %>%
+  hc_legend(align = "right", layout = "vertical", verticalAlign = "top", y = 35) %>% 
+  hc_tooltip(pointFormat= " Cor({point.col1}, {point.col2})={point.value}") 
+
+```
+
+
+Son pocos los pares de variables que presentan una correlación lineal importante, la correlación más alta se tiene para el par de variables OD280 y Flavonoides de 0.78, esto indicaría que las variables se asocian positivamente (en general se observa un aumento conjunto). Esta alta correlación puede complementarse con un gráfico de puntos o *scatter plot*:
+
+```{r, echo=TRUE}
+hchart(vinos, "scatter", hcaes(x = OD280, y = Flavonoides))
+```
+
+Podemos mejorar el gráfico anterior y además, incluir la recta resultante al realizar una regresión lineal entre ambas variables:
+
+```{r, echo=TRUE}
+
+#install.packages("broom")
+library(broom)
+
+lm.model<-augment(lm(Flavonoides~OD280, data=vinos)) #Se define la recta
+
+hchart(vinos, "scatter", hcaes(x = OD280, y = Flavonoides), name="Relación entre OD280 y Flavonoides")  %>% 
+  hc_tooltip(pointFormat= " OD280: {point.x} <br> Flavonoides: {point.y}") %>% 
+  hc_title(text="Relación entre OD280 y Flavonoides en vinos") %>% hc_add_series(lm.model, "line", hcaes(x = OD280, y = .fitted), name="Regresión lineal") %>% hc_add_theme(hc_theme_google())
+
+
+lm(Flavonoides~OD280, data=vinos)
+```
+
+La recta obtenida es es:
+
+$$\hat{Flavonoides}=-0.848+1.103 \cdot \text{OD280}$$
+Establecer una regresión lineal puede servir para comprender cómo se relacionan dos variables y además, poder predecir a la variable dependiente en términos de la variable independiente. La interpretación de la recta obtenida es que por cada aumento de la variable OD280 en una unidad, se esperaría un aumento de 1.103 unidades en la cantidad de flavonoides.
+
+##  **¿Cómo poder agrupar los vinos en términos de sus características?**
+
+**Idea** tenemos un conjunto de datos cuantitativos, si queremos determinar grupos en base a estas características debemos medir la similitud entre ellas. De manera iterativa, se calculan las distancias entre todos los puntos $p$ dimensionales, y se determina a qué cluster o grupo pertenece cada vino en términos de la menor distancia entre los puntos:
+
+
+```{r, echo=TRUE}
+
+stand<-scale(vinos[,-1]) #se estandariza la base de datos
+
+grupo<-kmeans(stand, 3) #Determinaremos 3 grupos de vinos
+
+vinos$grupo<-grupo$cluster
+
+vinos[,c("Codigo","grupo")]  #Cada vino pertenece a un grupo diferente
+```
+
+Algunas características interesantes son el grado de alcohol y la intensidad del color, variantes importantes a la hora de considerar qué vino comprar. Además añadimos la agrupación obtenida:
+
+```{r, echo=TRUE}
+
+hchart(vinos, "scatter", hcaes(x = Alcohol, y = `Intensidad del color`, group=grupo), name=c("Grupo 1","Grupo 2","Grupo 3")) %>% 
+  hc_tooltip(pointFormat= " Alcohol: {point.x} <br> Intensidad del color: {point.y}") %>%
+  hc_title(text="Alcohol e Intensidad del color por Grupo de vinos") %>%
+  hc_add_theme(hc_theme_elementary()) %>% 
+  hc_colors(colors=c( "#E8D98F","#FAA148", "#B93E3E"))
+
+```
+
+La idea de realizar grupos o segmentación es precisamente, detectar similitudes dentro de los grupos, es decir, dentro de cada cluster se espera observar similitudes. La utilidad de obtener la segmentación es que dado que un cliente compra un vino X, podemos determinar cuáles otros vinos son similares al vino X (es decir, que pertenecen al mismo grupo) y sugerirle al cliente tales vinos. 
+
+
+# Análisis de caso 2: ¿Son efectivas las medidas para prevenir accidentes?
+
+Nueva York es una de las ciudades más famosas en el mundo, asimismo una de las ciudades más activas y con mayor flujo de personas y naturalmente, también con un gran flujo vehícular. La gran cantidad de accidentes vehiculares que se producen es un tema de sumo interés para las autoridades. En los últimos años, se han realizado diversas campañas y medidas mensuales en pos de disminuir la cantidad de este tipo de accidentes. Se solicita evaluar si estas campañas han sido efectivas y cuál sería el pronóstico a futuro.
+
+## Información disponible en la base de datos *database*
+
+Se posee la información sobre múltiples accidentes automovilísticos registrados en Nueva York:
+
+- **UNIQUE KEY** ID del accidente
+- **DATE** Fecha del accidente
+- **TIME** Hora del accidente
+- **BOROUGH** Barrio en el que ocurre el accidente
+- **LOCATION** Latitud y longitud (ubicación exacta del accidente)
+- **ON STREET NAME** Nombre de la avenida donde ocurrió el accidente
+- **PERSONS INJURED** Personas que sufrieron algún daño en el accidente
+- **PERSONS KILLED** Personas que murieron producto del accidente
+- **VEHICLE 1 FACTOR** Causa asociada en el accidente
+
+```{r,echo=TRUE}
+
+data <- read_delim("database.csv", ";", escape_double = FALSE, trim_ws = TRUE)
+
+
+glimpse(data)
+```
+
+Es posible observar que contamos con más de 470 mil registros y 29 variables.
+
+Es necesario determinar si los registros equivalen a accidentes automovilísticos diferentes o quizás existen registros de algún accidente duplicado:
+
+```{r,echo=TRUE}
+table(table(data$`UNIQUE KEY`))
+```
+
+Efectivamente, no existen ningún accidente duplicado, por lo cual, cada registro contiene información asociada a un accidente automovilístico.
+
+# Preguntas de investigación
+
+Preguntas que resultan de interés para resolver el caso:
+
+- **¿Es posible observar una tendencia a la baja en la cantidad de accidentes vehiculares por mes? **
+
+- **¿Qué panorama se esperaría en los próximos años? ¿qué le sugeriría a las autoridades?**
+
+- 
+
+## **¿Es posible observar una tendencia a la baja en la cantidad de accidentes vehiculares por mes? **
+
+Necesitamos extraer la información del mes contenida en la variable DATE. Note que DATE contiene la información en formato Mes - Día - Año:
+
+```{r,echo=TRUE}
+head(data$DATE,5)
+```
+
+Podemos extraer el mes fácilmente:
+
+```{r,echo=TRUE}
+#install.packages("stringr")
+library(stringr)
+
+data$Month<-as.numeric(str_sub(data$DATE, start=0, end=2)) #Extrae los primeros dos caracteres
+
+unique(data$Month)  #Valores que toma data$Month, tiene sentido ya que son meses
+```
+
+Y de manera análoga extraemos el año:
+
+```{r,echo=TRUE}
+data$Year<-as.numeric(str_sub(data$DATE, start=-4)) #Extrae los últimos 4 caracteres de la variable DATE
+
+summary(data$Year)  #Verificamos que la variable Año posea valores con sentido
+```
+
+Y ahora podemos calcular la cantidad de accidentes por mes. Note que es necesario obtener las cifras por mes y año. 
+
+```{r,echo=TRUE}
+
+df<-data %>% 
+  group_by(Year, Month) %>% 
+  summarise(Accident=n())
+
+
+df
+```
+
+Realizamos un gráfico para analizar tendencia mensual por año y detectar alzas o bajas en la cantidad de accidentes:
+
+```{r, echo=TRUE}
+hchart(df, "line", hcaes(x=Month, y = Accident, group = Year))
+```
+
+
+Podemos mejorar el gráfico anterior de manera que sea más informativo:
+
+```{r, echo=TRUE}
+
+mymonths<-c("","Jan","Feb","Mar","Apr", "May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
+
+hchart(df, "line", hcaes(x=Month, y = Accident, group = Year)) %>%
+  hc_title(text="Mensual Time series of number of car accidents per year in NY") %>%
+  hc_xAxis(min=1, max=12, categories=mymonths) %>%
+  hc_tooltip(pointFormat = "Number of accidents: {point.y} <br> Year: {point.Year}") %>%
+  hc_add_theme(hc_theme_google())
+```
+
+Note que la información del año 2017 no se tiene completa, sólo se poseen los registros de Enero y Febrero, pero sí se tiene completa para los años 2015 y 2016. Respecto a la efectividad de las campañas, no se observa una tendencia clara a la baja, pero por ejemplo, en Febrero se observa un punto de baja notable en la cantidad de accidentes automovilísticos. Sin embargo, no sabemos a priori si esta baja se debe a las campañas y medidas realizadas por las autoridades o más bien a otro factor. Importante notar que en el mes de Mayo se observa un peak considerable en la cantidad de accidentes de autos, por lo que se sugeriría aumentar las medidas de prevención de accidentes automovilísticos en particular, en este mes.
+
+
+## **¿Qué panorama se esperaría en los próximos años? ¿qué le sugeriría a las autoridades?**
+
+Para obtener una predicción o panorama futuro, debemos definir un objeto que contenga la información en formato temporal de la cantidad de accidentes:
+
+```{r, echo=TRUE}
+serie<-ts(data=df$Accident, frequency = 12, start=c(2015,1), end=c(2017,2))
+
+serie
+```
+
+La información que se tiene en formato temporal usualmente se denomina *serie de tiempo*, uno de los tópicos de múltiple interés en economía, marketing, epidemiología, entre otros.
+
+
+Con el paquete *forecast* es posible obtener predicciones, en este caso, futuras para la cantidad de accidentes automovilísticos. Se utilizó un modelo arima para obtener estas predicciones. 
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+#install.packages("forecast")
+library("forecast")
+
+forecast <- forecast(auto.arima(serie), level = 95)
+
+prediccion<-round(forecast$mean)
+
+hchart(serie, name="Datos reales") %>% 
+  hc_add_theme(hc_theme_google()) %>% 
+  hc_add_series(prediccion, name="Predicción") %>%
+  hc_title(text="Prediction of number of car accidents in NY")
+```
+
+En base a la predicción realizada se espera una leve disminución en la cantidad de accidentes automovilísticos. Sin embargo, note que éstas son predicciones basadas en el comportamiento anterior de la serie de tiempo, la incertidumbre respecto al futuro es inevitable. Lo que se indica a las autoridades es que no se observa un cambio considerable en el comportamiento de la serie de tiempo cantidad de accidentes automovilísticos, por lo que, aparentemente, las medidas y campañas no estarían ayudando en gran magnitud a prevenir los accidentes automovilísticos. 
+
+
+# Análisis de caso 3: ¿Qué vuelve a una app popular?
+
+
+Google play es una plataforma que otorga aplicaciones y servicios a dispositivos móviles. Día a día se lanzan nuevas aplicaciones, cada vez más novedosas y creativas, con el ideal de obtener una gran popularidad y también una buena valoración del público objetivo. Un grupo desarrollador de aplicaciones busca determinar el perfil de la aplicación que aumente las probabilidades de buena valoración de su creación, se pide determinar características que potencien y aseguren un buen Rating.
+
+## Información disponible en la base de datos *googleplay*
+
+Se posee la información de diversas aplicaciones en Google play:
+
+- *App* Nombre de la aplicación
+- *Rating* Promedio de la calificación de los usuarios (de 1 a 5)
+- *Reviews* Número de usuarios que califica
+- *Type* Indica si la aplicación es de pago o gratis
+- *Content Rating* Tipo/restricción de público de la aplicación
+- *Genres* Género de la aplicación
+
+
+```{r, echo=TRUE}
+google <- read_csv("googleplay.txt", 
+    locale = locale(encoding = "ISO-8859-1"))
+
+
+glimpse(google)
+
+dim(google)
+
+```
+
+Se posee la información de 7069 aplicaciones. ¿Son estas aplicaciones diferentes? ¿o pudiera existir alguna repetida? Verificar:
+
+```{r, echo=TRUE}
+table(table(google$App))
+
+```
+
+
+Efectivamente ninguna aplicación está replicada en la base de datos.
+
+# Pregunta de investigación
+
+Pregunta de interés para resolver el caso:
+
+- **¿Cómo se distribuye el Rating por tipo de pago de la aplicación y clasificación del público objetivo? ¿qué le sugeriría al equipo desarrollador?**
+
+
+## **¿Cómo se distribuye el Rating por tipo de pago de la aplicación y clasificación del público objetivo? ¿qué le sugeriría al equipo desarrollador?**
+
+```{r, echo=TRUE}
+unique(google$Type)   #Tipo de pago de la app
+
+unique(google$`Content Rating`)  #Tipo de público de la app
+```
+
+Existen aplicaciones cuyo tipo de público no fue especificado (Unrated), no consideraremos estos casos para los análisis:
+
+```{r, echo=TRUE}
+df<-google %>% 
+  filter(`Content Rating`!="Unrated")
+```
+
+Realizamos un boxplot que muestre cómo se distribuyen los ratings por tipo de pago y tipo de público:
+
+
+```{r, echo=TRUE, fig.height=5, fig.width=5}
+hcboxplot(x = df$Rating, var = df$ `Content Rating`, var2 = df$Type,
+          outliers = FALSE) %>%  hc_chart(type = "column") %>% 
+  hc_add_theme(hc_theme_google()) %>%
+  hc_title(text="Comparativa Rating por tipo de pago y clasificación del público") %>%
+  hc_yAxis(min=1, max=5)
+```
+
+Podemos obtener estadísticas para complementar el gráfico anterior:
+
+```{r, echo=TRUE}
+
+google %>% 
+  filter(`Content Rating`!="Unrated") %>%
+  group_by(`Content Rating`, Type) %>%
+  summarise(MinRating=min(Rating), MedianRating=median(Rating), MaxRating=max(Rating), n=n())
+
+```
+
+Note que para realizar inferencias es necesario considerar la cantidad de observaciones que cae en cada una de las categorías. Aparentemente no existen muchas diferencias en términos de Rating por cada uno de los grupos, además note que la categoría Adult +18 registra muy pocas aplicaciones (en la base de datos).
+
+# Links 
+
+- Temas y gráficos de highcharter: 
+
+http://jkunst.com/highcharter/themes.html
+
+
+
+- Tabla de colores: 
+
+https://www.rapidtables.com/web/color/RGB_Color.html
+
+
+- Plantillas para RMarkdown: 
+
+https://github.com/juba/rmdformats
+https://github.com/hrbrmstr/markdowntemplates
+
+
+- Link de los materiales de la sesión:
+
+https://drive.google.com/drive/folders/1Mim8nkyS7E7sVM_8tpO7YDRaql6GK5lV?usp=sharing
