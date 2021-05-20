@@ -1,0 +1,53 @@
+---
+title: "Tarea 1 - EYP2706"
+author: "Natalie Julian"
+date: "Septiembre"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, 
+                      comment="#",
+                      warning=FALSE,
+                      message=FALSE,
+                      cache=TRUE, 
+                      fig.align = 'center')
+```
+
+# Actividad 1
+
+La base de datos _hotel_ contiene información sobre reservaciones de distintos hoteles. Interesa estudiar la variable target _Cancel_ la que indica si la reservación fue o no cancelada.
+
+- **Cancel**: Indica si la reserva fue cancelada o no (1: Cancelada, 0: No cancelada)
+- **Mes**: Mes de la reserva
+- **Weekend**: Cantidad de días de fin de semana (Sábados o Domingos) reservados
+- **Weekday**: Cantidad de días de la semana (Lunes, Martes, Miércoles, Jueves, Viernes) reservados
+
+
+```{r}
+library(readxl)
+hotel <- read_excel("hotel.xlsx")  #Carga la base de datos
+
+#install.packages("tidyverse")
+library(tidyverse)
+
+glimpse(hotel)   #Tipo de variables en la base de datos hotel
+
+summary(hotel)   #Análisis descriptivo de las variables cuantitativas
+
+```
+
+Realizamos un gráfico:
+
+```{r,echo=FALSE, fig.height=3, fig.width=3}
+df <- data.frame(dose=c("Cancelada", "No cancelada"),
+                len=c(sum(hotel$Cancel), nrow(hotel)-sum(hotel$Cancel)))
+
+ggplot(data=df, aes(x=dose, y=len)) +
+  geom_bar(stat="identity", fill="steelblue")+
+  geom_text(aes(label=len), vjust=1.6, color="white", size=3.5)+
+  theme_minimal()+
+  xlab("Estado reserva")+
+  ylab("Frecuencia absoluta")
+```
+

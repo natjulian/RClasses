@@ -1,0 +1,103 @@
+library(shiny) #App web
+library(shinydashboard) #Para formato dashboard
+library(shinyjs) #Para usar entorno javascript
+library(highcharter) #Para graficos interactivos
+library(DT) #Para tablas
+library(dplyr) #Para manipulacion de bases de datos
+
+
+###Base de datos
+
+library(readr)
+Pokemon <- read_csv("Pokemon.csv")
+
+
+#Barra superior del dashboard:
+header <- dashboardHeader(title = "Pokemon Analytics", 
+                          titleWidth = 250, tags$li(
+                            a(strong("Fuente Kaggle"),
+                              height = 40,
+                              href = "https://www.kaggle.com/abcsds/pokemon",
+                              title = "Link directo"),class = "dropdown"), 
+                          dropdownMenu(type="message", messageItem(
+                                         from = "Natalie dice:",
+                                         message = HTML("¿Dudas? Escríbeme a najulian@uc.cl"),
+                                         icon = icon("question"),
+                                         time = substr(Sys.time(), start=12, stop=16)
+                                       ))
+                          )
+#Menu de navegacion del dashboard:
+sidebar <- dashboardSidebar( 
+    width = 250,
+    sidebarMenu(
+      id = 'sidebar',
+      style = "position: relative; overflow: visible;",
+      
+      #Primera pestaña
+      menuItem("Mirada global",
+               tabName = 'menu1', startExpanded = F),
+      #Segunda pestaña
+      menuItem("Análisis filtrado", tabName = 'menu2', startExpanded = F,
+               menuSubItem('Estadísticas por Tipo', 
+                           tabName = "menu22", 
+                           icon = icon('zoom-in', 
+                                       lib = 'glyphicon'))),
+      div(id = 'sidebar1',
+          conditionalPanel("input.sidebar === 'menu22'",
+                           selectizeInput("select_tipo1",
+                                          "Seleccione Tipo", 
+                                          choices =  unique(Pokemon$`Type 1`), 
+                                          selected = "",  width = "300px",
+                                          multiple = F))),
+      useShinyjs() 
+    )
+  )
+
+#Cuerpo de cada viñeta
+body <- dashboardBody(
+  tabItems(
+  tabItem(tabName = 'menu1',
+          
+          h1("Información general"),
+          fluidRow(column(width=2,dataTableOutput('table1')))
+  ),
+  tabItem(tabName = 'menu22',
+          h1("Estadísticas filtradas por tipo"),
+          fluidRow(highchartOutput("graf1")))
+  )
+)
+
+#Unifica las tres partes
+ui <- dashboardPage(header, sidebar, body, skin = "green")
+
+#Genera outputs:
+server <- function(input, output) {
+  output$table1 <- renderDataTable({
+    
+    datatable(na.omit(Pokemon[,-1]), filter = list(position = "top"), 
+              selection="multiple",  
+              options = list(dom='t', autoWidth = TRUE , 
+                             pageLength = 20, ordering=F, 
+                             searchHighlight = FALSE, 
+                             scrollX = FALSE,
+                             class = c('compact cell-border stripe hover'),
+                             columnDefs = list(list(className="dt-justify"))),
+              extensions = c("Buttons" , "FixedColumns"), rownames= " ")})
+  
+  output$graf1 <- renderHighchart({
+    hchart(Pokemon %>%
+             filter(`Type 1`==input$select_tipo1), 
+           "scatter", hcaes(x = Speed, y = Attack)) %>%
+      hc_yAxis(title = list(text = "Attack"))%>%
+      hc_title(text=paste("Velocidad y Ataque por tipo", input$select_tipo1), align = "center")%>% 
+      hc_tooltip(pointFormat= "Attack: {point.y} <br> 
+                 Speed:{point.x}" ) %>%
+      hc_add_theme(hc_theme_google())
+    
+  })    
+}
+
+
+
+#Forma la app completa:
+shinyApp(ui = ui, server = server)
