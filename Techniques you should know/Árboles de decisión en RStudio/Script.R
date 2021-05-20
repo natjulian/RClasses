@@ -1,7 +1,7 @@
-### Ayudantía árboles de decisión
+### Árboles de decisión
 
 library(readr)
-credit <- read_csv("C:/Users/HP/Desktop/Minería de Datos/Arboles de decisión - 5 de Junio/credit.csv")
+credit <- read_csv("credit.csv")
 
 
 str(credit)  #Revisar formato de las variables 
