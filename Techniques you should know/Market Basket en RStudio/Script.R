@@ -1,4 +1,4 @@
-#### Ayudantía: Basket Analysis
+#### Basket Analysis
 
 #Defino el workspace o directorio
 

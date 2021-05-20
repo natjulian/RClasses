@@ -1,4 +1,4 @@
-##### Ayudantía - Clustering con K-means
+##### Clustering con K-means
 
 #Cargar la data
 
