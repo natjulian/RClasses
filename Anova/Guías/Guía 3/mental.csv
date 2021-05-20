@@ -1,0 +1,278 @@
+Type;Age;Right_answers
+BD I;47;40
+BD I;49;49
+BD I;45;43
+BD I;53;44
+BD II;50;50
+BD I;31;54
+BD I;45;53
+BD I;48;43
+BD I;57;41
+BD II;50;53
+BD I;55;52
+BD II;60;48
+BD II;55;47
+BD II;41;55
+BD I;56;45
+BD I;60;43
+BD II;48;51
+BD II;37;51
+BD I;39;49
+BD II;59;44
+BD II;33;49
+BD I;53;46
+BD II;54;42
+BD I;45;52
+BD II;52;47
+BD I;60;33
+BD II;53;43
+BD I;37;42
+BD II;54;38
+BD II;52;43
+BD I;65;45
+BD II;73;47
+BD I;47;42
+BD I;61;51
+BD II;48;50
+BD II;49;46
+BD II;48;50
+BD II;60;39
+BD I;46;46
+BD I;41;46
+BD I;40;49
+BD I;48;52
+BD I;57;47
+BD I;36;47
+BD II;59;44
+BD II;62;33
+BD I;21;47
+BD II;52;47
+BD I;41;44
+BD I;57;39
+BD II;67;41
+BD I;35;45
+BD I;35;47
+BD I;51;47
+BD II;39;41
+BD I;50;42
+BD I;53;38
+BD I;46;47
+BD I;53;42
+BD II;56;42
+BD II;69;43
+BD II;70;43
+BD II;51;50
+BD I;38;42
+BD II;49;50
+BD II;36;49
+BD I;42;51
+BD I;63;28
+BD I;33;47
+BD I;39;47
+BD II;44;47
+BD II;39;52
+BD I;23;44
+BD I;37;44
+BD I;54;45
+BD I;41;45
+BD II;50;46
+BD II;58;41
+BD II;50;48
+BD I;40;52
+BD II;65;44
+BD I;32;47
+BD I;38;56
+BD II;33;43
+BD II;42;45
+BD II;51;53
+BD I;49;50
+BD II;33;48
+BD I;29;43
+BD II;52;41
+BD II;34;36
+BD I;32;51
+BD I;60;41
+BD I;24;47
+BD I;29;49
+BD I;39;38
+BD II;66;39
+BD I;51;46
+BD I;69;43
+BD I;29;37
+BD I;53;46
+BD I;63;36
+BD I;32;44
+BD I;38;48
+BD II;25;46
+BD I;54;44
+BD I;37;49
+BD I;39;44
+BD I;24;43
+BD I;64;42
+BD I;55;41
+BD I;36;48
+BD I;31;48
+BD II;26;49
+BD I;34;42
+BD II;41;47
+BD II;53;44
+BD II;61;40
+BD II;35;52
+Control;47;50
+Control;49;49
+Control;45;49
+Control;53;49
+Control;50;56
+Control;31;56
+Control;45;48
+Control;48;47
+Control;57;52
+Control;50;56
+Control;55;51
+Control;60;45
+Control;55;57
+Control;41;51
+Control;56;50
+Control;60;46
+Control;48;50
+Control;37;54
+Control;39;46
+Control;59;53
+Control;33;55
+Control;53;47
+Control;54;49
+Control;45;52
+Control;52;47
+Control;60;45
+Control;53;42
+Control;37;50
+Control;54;52
+Control;52;49
+Control;60;45
+Control;62;48
+Control;47;45
+Control;61;53
+Control;48;51
+Control;49;49
+Control;48;54
+Control;50;57
+Control;45;45
+Control;41;55
+Control;49;45
+Control;48;54
+Control;58;51
+Control;36;50
+Control;59;55
+Control;61;46
+Control;22;53
+Control;42;56
+Control;41;46
+Control;53;47
+Control;67;50
+Control;35;54
+Control;35;52
+Control;52;46
+Control;37;51
+Control;50;48
+Control;53;53
+Control;46;47
+Control;53;56
+Control;56;52
+Control;59;48
+Control;59;41
+Control;51;49
+Control;38;51
+Control;49;43
+Control;39;54
+Control;42;52
+Control;62;49
+Control;33;48
+Control;39;56
+Control;44;46
+Control;39;50
+Control;23;50
+Control;37;48
+Control;54;46
+Control;41;55
+Control;50;56
+Control;58;51
+Control;50;58
+Control;40;50
+Control;60;45
+Control;32;53
+Control;38;53
+Control;33;53
+Control;42;50
+Control;51;49
+Control;49;55
+Control;33;52
+Control;29;51
+Control;52;47
+Control;34;52
+Control;32;50
+Control;59;50
+Control;24;53
+Control;29;52
+Control;39;54
+Control;66;52
+Control;51;43
+Control;65;52
+Control;29;49
+Control;53;51
+Control;60;46
+Control;32;50
+Control;38;51
+Control;25;51
+Control;54;47
+Control;37;54
+Control;39;53
+Control;24;49
+Control;59;44
+Control;55;54
+Control;36;54
+Control;31;50
+Control;26;50
+Control;34;50
+Control;41;52
+Control;53;51
+Control;55;39
+Control;35;49
+UD;72;38
+UD;67;41
+UD;66;40
+UD;72;48
+UD;52;45
+UD;74;43
+UD;53;44
+UD;71;38
+UD;67;47
+UD;61;47
+UD;70;49
+UD;70;38
+UD;71;42
+UD;70;42
+UD;69;40
+UD;78;39
+UD;75;41
+UD;57;38
+UD;50;32
+UD;49;48
+UD;65;45
+UD;58;40
+UD;69;46
+UD;70;49
+UD;66;37
+UD;72;36
+UD;59;41
+UD;58;53
+UD;57;50
+UD;57;47
+UD;73;43
+UD;69;33
+UD;64;47
+UD;59;43
+UD;53;46
+UD;35;50
+UD;49;36
+UD;43;39
+UD;64;45
