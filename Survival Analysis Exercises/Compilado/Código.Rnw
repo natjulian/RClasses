@@ -1,0 +1,738 @@
+\documentclass[10pt]{article}  
+\usepackage{geometry}       
+\usepackage{graphicx}      
+\def\one{\mbox{1\hspace{-4.25pt}\fontsize{12}{14.4}\selectfont\textrm{1}}}
+\usepackage{anyfontsize} 
+\usepackage{mathtools}
+\usepackage{verbatim}
+\usepackage{tcolorbox}
+\usepackage[hidelinks]{hyperref}  
+\newcommand{\click}[2]{\href{http://#1}{\colorlet{temp}{.}\color{magenta}{\underline{\color{temp}#2}}\color{temp}}}
+\newcommand\myeq{\stackrel{\mathclap{\normalfont\mbox{\small{i.i.d}}}}{\sim}}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{tcolorbox}
+\usepackage[utf8]{inputenc}
+\geometry{                  
+ a4paper, total={170mm,257mm}, left=17mm,
+ top=25mm }
+
+\title{Compilado ejercicios}   
+\author{Natalie Julian}   
+\date{www.nataliejulian.com}                          
+
+\makeatletter         
+\def\@maketitle{
+\raggedright
+\begin{center}
+{\LARGE \bfseries \ttfamily \@title }\\[4ex] 
+{\large  \@author}\\[2ex] 
+\@date\\[8ex]
+\end{center}}
+\makeatother
+
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+\renewcommand{\footnoterule}{\vspace*{-3pt}
+
+\noindent\rule{17cm}{1pt}\vspace*{3pt}}
+
+
+\begin{document}
+
+\maketitle 
+\subsection*{Pregunta 1}
+Sea \textbf{y}$=(y_{1},...,y_{n})$ variables aleatorias independientes e idénticamente distribuidas desde una distribución exponencial $f(y_{i}|\lambda)=\lambda \textnormal{exp}(-\lambda y_{i})$. Sea \textbf{$\nu$}$=(\nu_{1},...,\nu_{n})$ un vector de variables indicadoras de censura, donde $v_{i}=1$ si $y_{i}$ es tiempo de falla. Considere indexar el valor de $\lambda$ por una covariable $x$. Para esto defina:
+$$\lambda_{i}=\textnormal{exp}(\beta_{0}+\beta_{1}x_{i})$$
+Donde $\beta_{0}$ y $\beta_{1}$ corresponden a los parámetros a estimar. Utilice el conjunto de datos \texttt{sobrevida.csv}, el cual contiene información sobre los tiempos, censura y x.\\
+
+\begin{itemize}
+\item[a)] Asumiendo que $\beta_{1}$ es conocido, derive el estimador máximo verosímil de $\beta_{0}$.
+\item[b)] Utilizando la expresión obtenida en a), calcule el estimador máximo verosímil de $\beta_{0}$ cuando $\beta_{1}=1$, $\beta_{1}=1.6$ y $\beta_{1}=2.1$.
+\item[c)] Calcule y grafique el estimador de Kaplan-Meier con sus respectivos intervalos de confianza.
+
+\end{itemize}
+
+\subsection*{Pregunta 2} 
+Sea \textbf{y}$=(y_{1},...,y_{n})$ realizaciones de variables aleatorias independientes e idénticamente distribuidas desde la siguiente densidad:
+$$f_{Y}(y)=\frac{\alpha}{(1+y)^{\alpha+1}}, \qquad \alpha>0, \quad Y\in \mathbb{R}_{+}$$
+Sea $\nu=(\nu_{1},...,\nu_{n})$ un vector de variables indicadoras de censura, donde $\nu_{i}=0$ si $y_{i}$ es censurada por la derecha y $\nu_{i}=1$ si $y_{i}$ es un tiempo de falla. Derive expresiones para lo que se le pide a continuación:
+
+\begin{itemize}
+\item[a)] $F(y)$ 
+\item[b)] $S(y)$ 
+\item[c)] $h(t)$
+\item[d)] Encuentre el estimador máximo verosímil de $\alpha$. 
+\end{itemize}
+
+\subsection*{Pregunta 3} 
+Sea $T$ una variable aleatoria con soporte en los reales positivos cuya función de riesgo está dada por:
+
+$$h(t)=\frac{(\beta/\alpha)(t/\alpha)^{\beta-1}}{[1+(t/\alpha)^{\beta}]}, \qquad \alpha>0, \quad \beta>0$$ 
+Derive expresiones para:
+
+\begin{itemize} 
+\item[a)] $H(t)$
+\item[b)] $S(t)$
+\item[c)] $f(t)$
+\item[d)] $F(t)$
+\end{itemize}
+
+\subsection*{Pregunta 4} 
+Los siguientes datos corresponden a los tiempos de sobreviencia (en años) para dos grupos en estudio, cada uno con 25 participantes. El Grupo 1 no tiene historia de enfermedad crónica (CHR=0), y el Grupo 2 tiene una historia positiva de enfermedad crónica (CHR=1):\\
+\\
+Group1 (CHR=0): $12.3+,5.4, 8.2, 12.2+, 11.7, 10.0, 5.7, 9.8, 2.6, 11.0, 9.2, 12.1+, 6.6, \\
+2.2, 1.8, 10.2, 10.7, 11.1, 5.3, 3.5, 9.2, 2.5, 8.7, 3.8, 3.0$\\
+
+Group 2(CHR = 1) : $5.8, 2.9, 8.4, 8.3, 9.1, 4.2, 4.1, 1.8, 3.1, 11.4, 2.4, 1.4, 5.9, \\
+1.6, 2.8, 4.9, 3.5, 6.5, 9.9, 3.6, 5.2, 8.8, 7.8, 4.7, 3.9$\\ 
+Utilizando estos datos,
+
+\begin{itemize} 
+
+\item[a)] Calcule y grafique para cada grupo el estimador de Kaplan-Meier con sus respectivos intervalos de confianza.
+\item[b)] ¿Existen diferencias entre las curvas de sobrevivencia de los grupos? Justifique. 
+
+\end{itemize}
+
+\subsection*{Pregunta 5} 
+Conteste verdadero o falso a las siguientes afirmaciones:
+\begin{itemize}
+\item[a)] El análisis de sobrevivencia es una colección de procedimientos estadísticos para analizar datos en los cuales la variable observada es el tiempo que transcurre hasta que sucede un evento.
+\item[b)] En análisis de sobrevivencia el término evento es sinónimo de falla.
+\item[c)] En la práctica, la función de sobrevivencia es usualmente graficada como una curva suavizada.
+\item[d)] La función de sobrevivencia puede tomar valores entre $[0,\infty]$.
+\item[e)] Si conoce la forma de la función de riesgo, entonces puede determinar la correspondiente curva de sobrevivencia y viceversa.
+\item[f)] Si la curva de sobrevivencia para el grupo 1 cae completamente por encima de la curva de sobrevivencia para el grupo 2, entonces la media del tiempo de sobrevivencia para el grupo 2 es mayor que para el grupo 1.
+\item[g)] El conjunto que se encuentra en riesgo en seis semanas es el conjunto de individuos cuyos tiempos de sobrevivencia son menores o iguales a seis semanas.
+\item[h)] Si el conjunto que se encuentra en riesgo en seis semanas consiste de 22 personas, 4 personas fallan y 3 son censuradas para la semana 7, entonces el conjunto de riesgo en las 7 semanas consiste de 18 personas.
+\item[i)] Si la razón de riesgo que compara el grupo 1 relativo al grupo 2 es igual a 10, entonces el riesgo de falla es 10 veces mayor en el gruop 1 que en el grupo 2.
+\end{itemize}
+
+\subsection*{Pregunta 6} 
+Asuma que los tiempos de vida $T$ siguen la siguiente función de riesgo, 
+$$h(t|x) =h_{0}(t)\textnormal{exp}(x\beta)$$
+Demuestre que $f(t|x)=h_{0}(t)\textnormal{exp}(x\beta)[S_{0}(t)]^{\textnormal{exp}(x\beta)}$.\\
+
+\subsection*{Pregunta 7} 
+En un ensayo clínico para estudiar la sobrevivencia en pacientes con cáncer de pulmón, los pacientes fueron asignados aleatoriamente a un tratamiento experimental o un tratamiento placebo. La siguiente tabla reporta la sobrevivencia de pacientes en meses, el signo $+$ indica que la observación fue censurada.\\
+
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+ & Tiempos de sobrevivencia $t_{i}$ (meses)\\
+ \hline
+Placebo & 1 \quad 1 \quad 1+ \quad 2 \quad 2 \quad 3 \quad 3 \quad 3+\\
+\hline
+Tratamiento & 1 \quad 2 \quad 2+ \quad 2 \quad 3 \quad 3 \quad 4 \quad 5 \quad 5+\\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+\item[a)] Obtenga la estimación de la función de sobrevivencia por Kaplan-Meier para los pacientes con placebo y tratamiento. Reporte la sobrevivencia de los pacientes al tiempo 2.
+\item[b)] Para determinar la efectividad del tratamiento, ajuste un modelo asumiendo que los tiempos de sobrevivencia siguen un modelo exponencial. Para ello, cree la variable indicadora \textit{trt} que tome el valor 0 para el placebo y el valor 1 para el tratamiento experimental. Interprete.
+\item[c)] Ahora asuma para estos datos un modelo de regresión de Cox. Escriba el modelo, ajústelo e interprete. Estudie el supuesto de riesgos proporcionales.
+
+\end{itemize}
+
+\subsection*{Pregunta 8}
+Considere el modelo de riesgos proporcionales de Cox:
+
+\begin{itemize}
+
+\item[a)] Demuestre que la razón de riesgos para dos sujetos diferentes no depende del tiempo.
+\item[b)] Considere un modelo de Cox con tres predictores, sexo (codificado como: 1 para hombre y 0 para mujeres), peso del paciente en kilos y tratamiento (codificado como: 1 para los que siguen tratamiento, 0 para grupo control). Sea $\hat{\beta}_{1}=0.3$, $\hat{\beta}_{2}=0.77$ y $\hat{\beta}_{3}=-0.18$ los coeficientes para el sexo, el peso y el tratamiento respectivamente. Calcule la razón de riesgo para cada coeficiente e interpete en términos de riesgos relativos.
+\item[c)] ¿Es cierto que en el modelo de Cox, las funciones de riesgo están relacionadas de manera aditiva? Justifique.
+\item[d)] ¿Es cierto que la razón de riesgo es constante sobre el tiempo de sobrevida? Justifique.
+
+\end{itemize}
+
+\subsection*{Pregunta 9}
+Un grupo de hombres con cáncer de pulmón avanzado e inoperable fue aleatorizado en dos grupos uno con la terapia estándar y otro con quimioterapia de prueba. Se registró el tiempo que sobrevivieron en días. Los predictores considerados fueron: Therapy (type of therapy: standard o test), Cell (type of tumo cell: adeno, large, small or squamous), Prior (prior therapy: 0=no, 1=yes), Age (age in years), Duration (months from diagnosis to randomization), y Kps (Karnofsky performance scale). Este último, es un valor entre 0 y 100, donde el valor 100 se le asigna a una persona completamente sana sin evidencias de enfermedad y el valor 0 a una persona muerta.\\
+\\
+Las siguientes tablas presentan los resultados de haber ajustado el modelo de Cox a dichos datos (Las salidas corresponden al software SAS).
+
+$$\includegraphics[width = 80mm]{SAS1.JPG}$$
+$$\includegraphics[width = 80mm]{Sas2.JPG}$$
+$$\includegraphics[width = 140mm]{SAS3.JPG}$$
+ 
+
+Responda las siguientes preguntas:
+
+\begin{itemize}
+\item[a)] ¿Qué predictores tienen un efecto significativo sobre la sobrevivencia de los pacientes?
+\item[b)] ¿Cuál es el riesgo relativo del grupo con terapia (test) en relación a terapia (standard)?
+\item[c)] ¿El Kps es un factor de riesgo o un factor protector? Justifique.
+\item[d)] Calcule el riesgo relativo del término de interacción.
+\item[e)] Calcule los riesgos relativos del tipo de célula. Interprete, ¿cuáles son factores protectores y cuáles factores de riesgo?
+\item[f)] ¿Recomienda o no la quimioterapia test? ¿Bajo qué circunstancias? Argumente.
+\end{itemize}
+
+\subsection*{Pregunta 10}
+
+Considere la siguiente parametrización de la distribución Weibull: 
+$$f(y)=\frac{k}{\lambda}(\frac{y}{\lambda})^{k-1}\textnormal{exp}(-(\frac{y}{\lambda})^{k}); \qquad y>0, \lambda>0, k>0$$
+\begin{itemize}
+\item[a)] Reparametrice la distribución con $\gamma=(\frac{1}{{\lambda}})^{k}$
+\item[b)] Por conveniencia, considere $\phi=\textnormal{log}\gamma$ y obtenga las expresiones usuales ($F(y)$, $S(y)$, etcétera).
+\item[c)] Suponga que se tiene las observaciones $y_{i}=(T_{i},\delta_{i})$ con $i=1,...,n$ independientes e idénticamente distribuídas Weibull($\alpha$,$\phi$) y con $\delta_{i}$ indicatriz de censura por la derecha. Asuma $\alpha$ y $\phi$ desconocidos con priori para $\alpha$ una distribución Gamma con parámetros $b_{0}$ y $b_{1}$ y para $\phi$ una distribución normal con parámetros $\mu_{0}$ y $\sigma_{0}$.
+\item[d)] Obtenga la posteriori conjunta y las condicionales completas.
+\item[e)] Escriba un algoritmo en R para muestrear desde las posterioris completas (Metropolis-Hastings). Para la implementación utilice la base de datos \texttt{Fan} y fije $b_{0}=b_{1}=0.01$, $\mu_{0}=0$ y $\sigma^{2}_{0}=1000$ y $c=0.1$ para las distribuciones para obtener candidatos.
+\item[f)] Interprete los resultados obtenidos (calcule bandas de credibilidad y estadísticas de resumen, etc).
+\item[g)] Grafique la función de riesgo y la función de sobrevivencia.
+
+\end{itemize}
+
+\subsection*{Pregunta 11} 
+Considere $n$ individuos sin censura con tiempos de falla distribuidos exponencialmente y función de log verosimilitud $n \textnormal{log} \rho -\rho \sum{x_{i}}$, pruebe que el estadístico de razón $W$ para testear $H_{0}: \rho=\rho_{0}$ es:
+
+$$W=2(n \textnormal{log} n-n \textnormal{log}\sum{x_{i}}-n-n \textnormal{log} \rho_{0} +\rho_{0}\sum{x_{i}})$$
+
+Y pruebe que el valor esperado bajo la hipótesis nula es:
+$$E(W)= 1+(6n)^{-1}+O(n^{-2})$$
+
+\subsection*{Pregunta 12}  
+Asuma que la censura posee un componente aleatorio y considere la extención de riesgos constantes por tramos:
+$$h_{c}(t)=\lambda_{j} \qquad (a_{j-1}\leq t <a_{j})$$
+Y defina $b_{j}=a_{j}-a_{j-1}$ el ancho del intervalo. Considere que no se tiene el tiempo de sobrevivencia y la censura de manera exacta, sino que de manera agrupada, es decir, sólo se conoce $d_{j}$ (el número de fallas) y $m_{j}$ (el número de censuras) en el intervalo $[a_{j-1},a_{j})$.
+\begin{itemize}
+\item[a)] Derive expresiones para las probabilidades condicionales en cada uno de los casos que se presentan.
+\item[b)] Determine una expresión para la contribución de cada intervalo a la log verosimilitud conjunta.
+\item[c)] Encuentre los estimadores de máxima verosimilitud para $\lambda$ y $\rho$.
+\item[d)] Cree una función en R que ajuste un modelo exponencial por tramos, la función debe tener como argumentos los datos y los puntos de corte. Pruebe la función (puede utilizar la base de datos \texttt{Fan} y ajústela con distintas particiones.
+\end{itemize}
+
+\subsection*{Pregunta 13} 
+Sean $T$ y $U$ variables aleatorias independientes no negativas y defina $X=\textnormal{min}(T,U)$ que corresponde a una observación censurada del tiempo de fallo de la variable $T$ y sea $\delta=\one_{\{T\leq U\}}$ la variable indicatriz de censura (que toma el valor 1 si $X \leq t$ y cero en el otro caso). Defina el proceso de conteo $N(t): t \geq 0$ dado por:
+
+$$N(t)=\one_{\{X\leq t,\delta=1\}}=\delta \one_{\{T\leq t\}}$$
+
+Muestre que:
+$$\lambda(t)\triangle t \approx E[N((t+\triangle t)-)-N(t-)|T\geq t, U \geq t]$$
+Interprete la función de riesgo $\lambda(t)$ en este contexto.
+ 
+\newpage
+\section{Soluciones}
+\scriptsize{
+\subsection*{Pregunta 1}
+\begin{itemize}
+\item[a)] \textbf{Solución}\\
+La función de verosimilitud está dada por:
+$$L(\lambda|y,\nu)=\prod_{i=1}^{n}{h(y_{i}|\lambda_{i})^{\nu_{i}}S(y_{i}|\lambda_{i})}$$
+
+Donde $h(y|\lambda)$ representa la función de riesgo y $S(y|\lambda)$ la función de sobrevivencia. Para este caso, se tiene:
+
+\begin{align*}
+S(y) & = 1-F(y) \\
+     & = 1-\int_{0}^{y}{\lambda e^{-\lambda u}du} \\
+     & = 1-(1-e^{-\lambda y})\\
+     & = e^{-\lambda y}
+\end{align*}
+
+\begin{align*}
+h(y) & =\frac{f(y)}{S(y)}\\
+     & = \frac{\lambda e^{-\lambda y}}{e^{-\lambda y}}\\
+     & = \lambda
+\end{align*}
+
+Así, reemplazando, la función de verosimilitud está dado por: 
+
+$$L(\lambda |y,\nu)=\prod_{i=1}^{n}{\lambda_{i}^{\nu_{i}}e^{-\lambda_{i}y_{i}}}$$
+Reemplazando $\lambda_{i}=\textnormal{exp}(\beta_{0}+\beta_{1}x)$ se tiene:
+
+$$L(\lambda|y,\nu)=e^{\sum_{i=1}^{n}{\nu_{i}(\beta_{0}+\beta_{1}x_{i})}}e^{-\sum_{i=1}^{n}{y_{i}e^{(\beta_{0}+\beta_{1}x_{i})}}}$$
+
+Y la función de log-verosimilitud:
+$$l(\beta_{0}|y,\nu,\beta_{1},x)=\sum_{i=1}^{n}{v_{i}(\beta_{0}+\beta_{1}x_{i})}-\sum_{i=1}^{n}{y_{i}e^{(\beta_{0}+\beta_{1}x_{i})}}$$
+Al igualar a cero la función score, se obtiene:
+$$\hat{\beta_{0}}=\textnormal{log}(\sum_{i=1}^{n}{\nu_{i}})-\textnormal{log}(\sum_{i=1}^{n}{y_{i}e^{\beta_{1}x_{i}}})$$
+
+Se comprueba que es el estimador máximo verosímil pues la segunda derivada de la  función de log-verosimilitud resulta ser negativa.
+
+\item[b)] \textbf{Solución}\\
+
+<<>>=
+datosobrevida<-read.csv('sobrevida.csv',h=T)
+
+head(datosobrevida,4)
+
+beta0hat<-function(beta1,datos){
+nu<-datos$censura
+y<-datos$tiempos
+x<-datos$x
+
+beta0<-log(sum(nu))-log(sum(y*exp(x*beta1)))
+
+return(beta0)}
+
+beta0hat(1,datosobrevida)
+beta0hat(1.6,datosobrevida)
+beta0hat(2.1,datosobrevida)
+
+@
+
+\item[c)] \textbf{Solución}\\
+<<fig.height=4,fig.width=5>>=
+
+#install.packages("survival")
+library(survival)
+my.surv.object<-Surv(time=datosobrevida$tiempos,event = datosobrevida$censura, type = "right")
+
+
+survfit(my.surv.object ~ 1,conf.type="plain", conf.int=0.90)
+
+my.fit<-survfit(my.surv.object ~ 1)
+str(my.fit)
+
+#summary(my.fit)
+
+plot(my.fit, main="Kaplan-Meier estimate",
+     xlab="time", ylab="survival function",mark.time=T)
+
+print(survfit(my.surv.object ~ 1), print.rmean=TRUE)
+
+@
+
+
+\end{itemize}
+
+\subsection*{Pregunta 2} 
+\begin{itemize}
+\item[a)] \textbf{Solución}\\
+$$ F(y) = 1-\frac{1}{(1+y)^{\alpha}}$$
+\item[b)] \textbf{Solución}\\
+$$S(y)=\frac{1}{(1+y)^{\alpha}}$$
+\item[c)] \textbf{Solución}\\
+$$ h(y)=\frac{\alpha}{1+y}$$
+\item[d)] \textbf{Solución}\\
+$$\hat{\alpha}_{EMV}=\frac{\sum_{i=1}^{n}{\nu_{i}}}{\sum_{i=1}^{n}{ln(1+y_{i})}}$$
+\end{itemize}
+
+\subsection*{Pregunta 3} 
+\begin{itemize} 
+\item[a)] \textbf{Solución}\\
+$$H(t)=ln(1+(t/\alpha)^{\beta})$$
+\item[b)] \textbf{Solución}\\ 
+$$S(t)=[1+(t/\alpha)^{\beta}]^{-1}$$
+\item[c)] \textbf{Solución}\\ 
+$$f(t)=\frac{(\beta/\alpha)(t/\alpha)^{\beta-1}}{[1+(t/\alpha)^{\beta}]^{2}}$$
+\item[d)] \textbf{Solución}\\
+$$F(t)=1-[1+(t/\alpha)^{\beta}]^{-1}$$
+\end{itemize}
+
+\subsection*{Pregunta 4} 
+
+\begin{itemize} 
+
+\item[a)] \textbf{Solución}\\
+
+
+<<fig.height=4,fig.width=5>>=
+
+GRUPO1<-rbind(c(12.3,0),c(5.4,1),c(8.2,1),c(12.2,0),c(11.8,1),c(10,1),c(5.7,1),c(9.8,1),
+              c(2.6,1),c(11,1),c(9.2,1),c(12.1,0),c(6.6,1),c(2.2,1),c(1.8,1),c(10.2,1),
+              c(10.7,1),c(11.1,1),c(5.3,1),c(3.5,1),c(9.2,1),c(2.5,1),c(8.7,1),c(3.8,1),c(3,1))
+
+GRUPO2<-cbind(c(5.8,2.9,8.4,8.3,9.1,4.2,4.1,1.8,3.1,11.4,2.4,1.4,5.9,1.6,2.8,4.9,3.5,6.5,
+                9.9,3.6,5.2,8.8,7.8,4.7,3.9),rep(1,25))
+
+#GRUPO 1
+
+my.surv.object<-Surv(time=GRUPO1[,1],event = GRUPO1[,2], type = "right")
+
+survfit(my.surv.object ~ 1,conf.type="plain", conf.int=0.90)
+
+my.fit1<-survfit(my.surv.object ~ 1)
+str(my.fit1)
+
+#summary(my.fit1)
+
+plot(my.fit1, main="Kaplan-Meier estimate Group 1",
+     xlab="time", ylab="survival function",mark.time=T)
+
+print(survfit(my.surv.object ~ 1), print.rmean=TRUE)
+
+#GRUPO 2
+my.surv.object<-Surv(time=GRUPO2[,1],event = GRUPO2[,2], type = "right")
+
+survfit(my.surv.object ~ 1,conf.type="plain", conf.int=0.90)
+
+my.fit2<-survfit(my.surv.object ~ 1)
+str(my.fit2)
+
+#summary(my.fit2)
+
+plot(my.fit2, main="Kaplan-Meier estimate  Group 2",
+     xlab="time", ylab="survival function",mark.time=T)
+
+print(survfit(my.surv.object ~ 1), print.rmean=TRUE)
+
+@
+
+\item[b)] \textbf{Solución}\\ 
+\end{itemize}
+
+<<>>=
+par(mfrow=c(1,2))
+
+plot(my.fit1, main="Kaplan-Meier estimate Group 1",
+     xlab="time", ylab="survival function",mark.time=T)
+
+plot(my.fit2, main="Kaplan-Meier estimate Group 2",
+     xlab="time", ylab="survival function",mark.time=T)
+
+DATA<-rbind(cbind(GRUPO1,rep(3,25)),cbind(GRUPO2,rep(2,25)))
+colnames(DATA)<-c("tiempos","censura","trat")
+DATA<-data.frame(DATA)
+survdiff(Surv(tiempos, censura)~trat, data=DATA)
+
+#Las curvas difieren. (investigar test)
+@
+
+\subsection*{Pregunta 5}
+\textbf{Solución}\\ 
+
+\begin{itemize}
+\item[a)] Verdadero.
+\item[b)] Verdadero.
+\item[c)] Falso. El Kaplan-Meier posee una gráfica escalonada usualmente.
+\item[d)] Falso. Está entre 0 y 1.
+\item[e)] Verdadero.
+\item[f)] Falso. La media del tiempo de sobrevivencia para el grupo 1 es mayor que para el grupo 2. 
+\item[g)] Falso. Cuyos tiempos de sobrevivencia son mayores a seis semanas.
+\item[h)] Falso. Serían 13 personas.
+\item[i)] Verdadero.
+\end{itemize}
+
+\subsection*{Pregunta 7} \textbf{Solución}\\ 
+\begin{itemize}
+\item[a)] \textbf{Solución}\\ 
+
+Para placebo:
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+$t_{k}$ & $d_{k}$& $q_{k}$ & $n_{k}$ & $\hat{S}(t)$\\
+\hline
+0 & 0 & 0& 8 & 1\\
+\hline
+1 & 2 & 1 & 8 & $(1-\frac{2}{8})$\\
+\hline
+2&2&0&5&$(1-\frac{2}{8})(1-\frac{2}{5})$\\
+\hline 
+3&2&1&5&$(1-\frac{2}{8})(1-\frac{2}{5}(1-\frac{2}{5})$\\
+\hline
+\end{tabular}
+\end{center}
+
+Para tratamiento:
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+$t_{k}$ & $d_{k}$& $q_{k}$ & $n_{k}$ & $\hat{S}(t)$\\
+\hline
+0 & 0 & 0& 9 & 1\\
+\hline
+1&1&0&9&$(1-\frac{1}{9})$\\
+\hline
+2&2&1&8&$(1-\frac{1}{9})(1-\frac{2}{8})$\\
+\hline
+3&2&0&5&$(1-\frac{1}{9})(1-\frac{2}{8})(1-\frac{2}{5})$\\
+\hline
+4&1&0&3&$(1-\frac{1}{9})(1-\frac{2}{8})(1-\frac{2}{5})(1-\frac{1}{3}$\\
+\hline
+5&1&1&2& $(1-\frac{1}{9})(1-\frac{2}{8})(1-\frac{2}{5})(1-\frac{1}{3}(1-\frac{1}{2}$\\
+\hline
+\end{tabular}
+\end{center}
+
+O también: 
+<<>>=
+datos<-cbind(c(1,1,1,2,2,3,3,3,1,2,2,2,3,3,4,5,5),
+             c(1,1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,0),c(rep(0,8),rep(1,9)))
+
+head(datos)
+library(survival)
+Sp<-Surv(datos[1:8,1],datos[1:8,2])
+Sp
+St<-Surv(datos[9:17,1],datos[9:17,2])
+St
+
+spfit<-survfit(Sp~1,)
+stfit<-survfit(St~1,)
+
+
+summary(spfit)
+summary(stfit)
+
+summary(spfit,time=2)
+summary(stfit,time=2)
+@
+
+
+\item[b)] \textbf{Solución}\\ 
+
+<<>>=
+sexp<-survreg(Surv(datos[,1],datos[,2])~datos[,3],dist="exponential")
+sexp
+summary(sexp)
+#El valor p es igual a 0.5, utilizando un 5%, no sería significativo el tratamiento
+#para explicar los tiempos de sobrevivencia
+AIC(sexp)
+
+@
+
+\item[c)] \textbf{Solución}\\ 
+
+
+<<>>=
+fit_0<-coxph(Surv(datos[,1],datos[,2])~datos[,3])
+summary(fit_0)
+
+#Al ajustar el modelo de riesgos proporcionales, se obtiene un valor-p para el 
+#tratamiento de 0.27, es decir, aún no es significativo.
+#la exp(coeftrat)=0.5132, es decir, cuando paso del placebo al tratamiento, los 
+#riesgos disminuyen un 48% aproximadamente. 
+#El intervalo de confianza al 95% es (0.1556,1.693), el cual contiene al 1, 
+#por lo tanto, no se puede rechazar que el efecto del tratamiento sea nulo.
+
+cox.zph(fit_0, transform="km", global=TRUE)
+#Obtenemos un valor-p de 0.951, es decir, no rechazamos H0 (que los riesgos son proporcionales)
+
+@
+
+\end{itemize}
+\subsection*{Pregunta 8}
+
+\begin{itemize}
+
+\item[a)]  \textbf{Solución}\\ 
+Trabajar la expresión $HR(t,x_{1},x_{2}))$ y llegar a que no depende del tiempo (se cancelan las funciones que dependen  de $t$).
+\item[b)]  \textbf{Solución}\\ 
+$$HR_{sexo}(t,x_{1}=1,x_{2}=0)=e^{\hat{\beta}_{1}}=e^{-0.3}=1.35$$
+Los hombres tienen un $35$ por ciento más de riesgo en comparación a las mujeres.\\
+$$HR_{peso}(t,x_{1}=70,x_{2}=69)=e^{\hat{\beta}_{2}}=e^{0.77}=2.16$$
+Por cada kilo de aumento en el peso, el riesgo aumenta un 116 por ciento.\\
+$$HR_{tratamiento}(t,x_{1}=1,x_{2}=0)=e^{\hat{\beta}_{3}}=e^{-0.18}=0.83$$
+El tratamiento baja el riesgo en un $17$ por ciento.
+
+\item[c)] \textbf{Solución}\\ 
+Falso. Las funciones de riesgo están relacionadas de manera multiplicativa.
+\item[d)] \textbf{Solución}\\ 
+Verdadero. La razón de riesgo es constante sobre el tiempo de sobrevida.  
+
+\end{itemize}
+
+\subsection*{Pregunta 9}
+\begin{itemize}
+\item[a)] \textbf{Solución}\\ 
+Los predictores con un efecto significativo sobre la sobrevivencia de los pacientes son: Karnofsky performance scale, cell type, therapy y la interración de Prio therapy con la therapy actual. Esto se deduce de los resultados del test de Wald.
+\item[b)] \textbf{Solución}\\ 
+$e^{0.56662}=1.7623$. Los pacientes en el grupo de terapia test un $76$ por ciento más de riesgo de morir en relación a los que reciben la terapia estándar.
+\item[c)] \textbf{Solución}\\ 
+$e^{-0.033}=0.9675$ es un factor protector, de hecho el riesgo de morir disminuye en un $3.2$ por ciento por cada unidad de aumento en el kps.
+\item[d)] \textbf{Solución}\\ 
+$e^{-0.87579}=0.4165$. Los pacientes que recibieron terapia previa y ahora están recibiendo la quimioterapia de prueba, tienen un $58.35$ por ciento menos de riesgos de morir.
+\item[e)] \textbf{Solución}\\ 
+$e^{0.78356}=2.189252$. Los pacientes con celulas tipo adeno tienen un $118$ por ciento más de riesgo de morir en relación a los que tienen células large. (Factor de riesgo) \\
+Los pacientes con células small tienen un $61.98$ por ciento más de riesgo de morir en relación a los que tienen células large. (Factor de riesgo)\\
+$e^{-0.4077}=0.6652$. Los pacientes con células tipo suqmous tienen un $33.48$ por ciento menos de riesgo de morir en relación a los que tienen células large. (Factor protector)
+\item[f)] \textbf{Solución}\\ 
+Se recomienda aplicar la quimioterapia test sólo a los pacientes que recibieron una terapia previa.
+
+\end{itemize}
+
+
+\subsection*{Pregunta 10}
+\textbf{Solución}\\
+
+<<eval=FALSE>>=
+Fan<-read.table('Fan.txt')
+colnames(Fan)<-c("lifetime","censor")
+Fan[,1]<-Fan$lifetime/1000
+
+attach(Fan)
+
+library(truncnorm)
+
+# Calcula cantidades fijas
+nu=(censor==0)*1; y=lifetime; n=length(nu)
+sum_nu=sum(nu)
+
+# Fija hyper-parámetros
+mu0=0; sigma02=1000; alpha0=0.01; kappa0=0.01; c=0.1
+
+# Fija valores iniciales
+alpha=5; lambda=0.1
+alphaante=alpha; lambdaante=lambda
+nscan=50000
+
+alphaM=vector(mode="numeric", length=nscan)
+lambdaM=vector(mode="numeric", length=nscan)
+alphaM[1]=alpha
+lambdaM[1]=lambda
+
+for(i in 2:nscan)
+{	
+  
+  # Actualización de alpha
+  alphaaste=rtruncnorm(n=1, a=0, b=Inf, mean=alphaante, sd=c)
+  logPaste=(alpha0+sum_nu-1)*log(alphaaste)+ sum((alphaaste-1)*nu*log(y)-exp(lambda)*y^alphaaste)-alphaaste*kappa0
+  logPante=(alpha0+sum_nu-1)*log(alphaante)+ sum((alphaante-1)*nu*log(y)-exp(lambda)*y^alphaante)-alphaante*kappa0
+  logJtaste=log(dtruncnorm(x=alphaaste, a=0, b=Inf, mean=alphaante, sd=c))
+  logJtante=log(dtruncnorm(x=alphaante, a=0, b=Inf, mean=alphaaste, sd=c))
+  lnr1=logPaste-logJtaste-logPante+logJtante
+  p1=exp(min(lnr1,0))
+  u1=runif(1)
+  if(p1>u1){alpha=alphaaste}
+  if(p1<=u1){alpha=alphaante}
+  alphaante=alpha
+  
+  # Actualización de lambda
+  lambdaaste=rnorm(n=1, mean=lambdaante, sd=c)
+  logPaste=lambdaaste*sum_nu-exp(lambdaaste)*sum(y^alpha)-(0.5*(lambdaaste-mu0)^2)/sigma02
+  logPante=lambdaante*sum_nu-exp(lambdaante)*sum(y^alpha)-(0.5*(lambdaante-mu0)^2)/sigma02
+  lnr2=logPaste-logPante
+  p2=exp(min(lnr2,0))
+  u2=runif(1)
+  if(p2>u2){lambda=lambdaaste}
+  if(p2<=u2){lambda=lambdaante}
+  lambdaante=lambda
+  
+  alphaM[i]=alpha
+  lambdaM[i]=lambda
+}
+
+plot(alphaM, type="l")
+plot(lambdaM, type="l")
+
+summary(alphaM)
+summary(lambdaM)
+
+# Muestras desde la posteriori
+indices=seq(2000,50000,48)
+alpham=alphaM[indices]
+lambdam=lambdaM[indices]
+acf(alpham)
+acf(lambdam)
+
+hist(alpham)
+hist(lambdam)
+mean.alpha=mean(alpham)
+mean.lambda=mean(lambdam)
+exp(mean(lambdam))
+
+p025.alpha=quantile(alpham, probs=0.025)
+p0975.alpha=quantile(alpham, probs=0.975)
+
+p025.lambda=quantile(lambdam, probs=0.025)
+p0975.lambda=quantile(lambdam, probs=0.975)
+
+# Función de sobrevivencia
+yy=seq(0,2,0.01)
+Sy=exp(-exp(mean.lambda)*yy^(mean.alpha))
+Sy025=exp(-exp(p025.lambda)*yy^(p025.alpha))
+Sy0975=exp(-exp(p0975.lambda)*yy^(p0975.alpha))
+plot(yy, Sy, type="l")
+lines(yy, Sy025, lty=2, col=2)
+lines(yy, Sy0975, lty=2, col=2)
+
+# Función de riesgo
+hy=mean.alpha*yy^(mean.alpha-1)*exp(mean.lambda)
+hy025=p025.alpha*yy^(p025.alpha-1)*exp(p025.lambda)
+hy0975=p0975.alpha*yy^(p0975.alpha-1)*exp(p0975.lambda)
+plot(yy, hy, type="l")
+lines(yy, hy025, lty=2, col=2)
+lines(yy, hy0975, lty=2, col=2)
+@
+\subsection*{Pregunta 11}
+Se puede definir de manera general:
+$$W(\omega_{0})=W=2[l(\hat{w},\hat{\lambda})-l(\omega_{0},\hat{\lambda}_{\omega_{0}})]$$ 
+Donde $l(\hat{w},\hat{\lambda})$ corresponde a la estimación de máxima verosimilitud usual y $l(\omega_{0},\hat{\lambda}_{\omega_{0}})$ corresponde a la estimación de máxima verosimilitud restringida a la hipótesis nula ($\omega=\omega_{0}$). Bajo la hipótesis nula, el estadístico $W(\omega_{0})=W$ tiene aproximadamente una distribución chi-cuadrado, con $p_{\omega}=dim(\omega)$ grados de libertad. Si la distribución asintótica fuera exacta, se tendría que $E(W)=p_{\omega}$, sin embargo, se tiene por el \textit{Factor de corrección de Barlett} que:
+$$E(W)=p_{\omega}[1+\frac{c}{n}+o(\frac{1}{n})]$$
+En este caso, $p_{\omega}=1$  y $c$ se estima de manera consistente.
+\subsection*{Pregunta 12} 
+\begin{itemize}
+\item[a)]\textbf{Solución}\\
+Existen tres casos en este problema.\\
+i) $r_{j-1}-d_{j}-m_{j}$ sujetos que sobrevivieron durante el intervalo y que no están censurados, la probabilidad condicional en este caso es $\textnormal{exp}(-b(\rho+\lambda))$.\\
+ii) $d_{j}$ sujetos que fallaron en el intervalo, su probabilidad condicional es $\frac{\rho}{\rho+\lambda}(1-\textnormal{exp}[-b(p+\rho)])$.\\
+iii) $m_{j}$ sujetos censurados en el intervalo, su probabilidad condicional es $\frac{\lambda}{\lambda+\rho}(1-\textnormal{exp}[-b(p+\rho)])$
+\item[b)]\textbf{Solución}\\
+La contribución en cada intervalo es:
+$$l_{j}(p_{j},\lambda_{j})=-(r-d-m)b(\rho+\lambda)+d\textnormal{log}(\rho/(\rho+\lambda))+m\textnormal{log}(\lambda/(\rho+\lambda))+(d+m)\textnormal{log}(1-\textnormal{exp}[-b(\rho+\lambda)])$$
+\item[c)]\textbf{Solución}\\
+Los estimadores de máxima verosimilitud son:
+$$\hat{\rho}=-\frac{d}{b(d+m)}\textnormal{log}((r-d-m)/r)$$
+$$\hat{\lambda}=-\frac{m}{b(d+m)}\textnormal{log}((r-d-m)/r)$$
+\item[d)]\textbf{Solución}\\
+<<eval=FALSE>>=
+exptramos <- function(data, timevar, deathvar, bounds) {
+  # pwe: expands an S data frame for piece-wise exponential survival
+  # G. Rodriguez, Nov 29, 1992
+  #
+  # Check arguments: time and death must be variables in the data frame
+  # and boundaries must be non-negative and strictly increasing
+  if(!is.data.frame(data)) stop("First argument must be a data frame")
+  if(is.na(match(tn <- deparse(substitute(timevar)), names(data))))
+    stop(paste("\n\tSurvival time", tn, 
+               "must be a variable in the data frame"))
+  if(is.na(match(dn <- deparse(substitute(deathvar)), names(data))))
+    stop(paste("\n\tDeath indicator", dn, 
+               "must be a variable in the data frame"))
+  width <- diff(bounds)
+  if(any(bounds < 0) | any(width <= 0)) stop(paste(
+    "Invalid interval boundaries in", deparse(substitute(
+      bounds))))      #
+  # Expand the data frame creating one pseudo-observation for each
+  # interval visited, add interval number, events and exposure time
+  # (existing variables with these names will be overwriten)
+  n <- cut(data[, tn], bounds)
+  data <- data[rep(seq(along = n), n),  ]
+  i <- NULL
+  for(k in 1:length(n))
+    i <- c(i, 1:n[k])
+  data$events <- ifelse(data[, tn] > bounds[i + 1], 0, data[, dn])
+  data$exposure <- ifelse(data[, tn] > bounds[i + 1], width[i], data[, tn
+                                                                     ] - bounds[i])
+  data$interval <- i
+  attr(data$interval, "levels") <- attr(n, "levels")
+  data
+}
+
+#Ejemplo: 
+exptramos(Fan,lifetime,censor,c(0,44,100,150))
+
+@ 
+
+\end{itemize}
+
+
+\subsection*{Pregunta 13} 
+\textbf{Solución}\\
+Se sabe que:
+$$\lambda(t)=-d[\textnormal{log}S(t)]/dt$$
+Por independencia entre $T$ y $U$: 
+
+\begin{align*}
+\lambda(t) & =\lim_{\triangle t \downarrow 0}{\frac{1}{\triangle t} P\{t\leq T < t+\triangle t\}[P\{T\geq t\}]^{-1}}\\
+ & =\lim_{\triangle t \downarrow 0}{\frac{1}{\triangle t} P\{t\leq T < t+\triangle t|T\geq t,U\geq t\}}
+\end{align*}
+Luego,
+$$P\{t\leq T < t+\triangle t|T\geq t,U\geq t\}=\lambda(t)\triangle t+o(\triangle t)$$ 
+Considere $N(t-)=\lim{s \uparrow t}{N(s)}$. Luego,
+$$\lambda(t)\triangle t \approx P\{N((t+\triangle t)-)-N(t-)=1|T\geq t,U\geq t\}$$
+Dada la naturaleza de la variable $N((t+\triangle t)-)-N(t-)$ (variable aleatoria 0-1), se tiene que:
+$$\lambda(t)\triangle t \approx E\{N((t+\triangle t)-)-N(t-)=1|T\geq t,U\geq t\}$$
+
+La función de hazard da una tasa promedio del cambio condicional del cambio en $N$ sobre $[t,t+\triangle t]$, dado que ambos, la censura y los tiempos de falla exceden o igualan $t$, y por eso, indirectamente especifica la tasa condicional a la que $N$ salta en pequeños intervalos.
+}
+
+\end{document}
