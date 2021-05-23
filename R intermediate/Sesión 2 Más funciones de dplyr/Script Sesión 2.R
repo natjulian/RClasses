@@ -77,3 +77,5 @@ mtcars%>%
 
 mtcars%>%
   filter(categoria2hp %in% c("[30,90]", "(150,210]"))
+
+

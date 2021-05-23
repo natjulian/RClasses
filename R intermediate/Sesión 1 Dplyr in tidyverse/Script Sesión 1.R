@@ -101,11 +101,26 @@ iris[, -c(1, 3, 4)]
 
 #Forma 4: con dplyr, selecciona las columnas de interés 
 
-
-#Forma 1 usual:
-
 iris%>%
   select(Sepal.Width, Species)
+
+# Otras formas de usar select
+
+## Si quiero extraer las columnas que tengan la palabra length
+
+library(tidyr)
+
+iris %>% 
+  select(contains("Length")) %>%
+  head() #head muestra los primeros registros
+
+## Si quiero extraer las columnas que comienzan con Sepal
+
+iris %>%
+  select(starts_with("Sepal"))%>%
+  tail() #tail muestra los últimos registros
+
+#Forma 1 usual:
 
 iris$radio<-2*iris$Petal.Length*iris$Petal.Width/(iris$Petal.Length+iris$Petal.Width)
 
@@ -115,7 +130,6 @@ head(iris)
 
 iris%>%
   mutate(radio=2*Petal.Length*Petal.Width/(Petal.Length+Petal.Width))
-
 
 #Forma 1: 
 
