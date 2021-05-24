@@ -16,6 +16,10 @@ mtcars%>%
 
 mtcars%>%
   group_by(vs)%>%
+  summarise(n=n())
+
+mtcars%>%
+  group_by(vs)%>%
   mutate(prom=mean(disp)) %>% #Calcula promedio de disp para vs=0 y vs=1
   mutate(promwt=mean(wt))  #Calcula promedio de wt para vs=0 y vs=1
 
@@ -53,6 +57,18 @@ mtcars%>%
   filter(grepl("Mazda|Toyota", rowname)) 
 #grepl indica si se encuentra el texto Mazda o Toyota en 
 #la variable rowname
+
+
+mtcars%>%
+  rename(modelo=rowname)%>% #le cambia el nombre de la variable rowname a modelo
+  mutate(marca=sub("\\ .*", "", modelo))
+
+mtcars%>%
+  rename(modelo=rowname)%>% #le cambia el nombre de la variable rowname a modelo
+  mutate(marca=sub("\\ .*", "", modelo))%>% #Le extrae la primera palabra al modelo (marca)
+  group_by(marca)%>% #agrupa por marca
+  summarise(ncyl=n_distinct(cyl))%>% #cuenta valores diferentes que toma el n° de cilindros por marca
+  arrange(desc(ncyl)) #ordena según esta nueva variable
 
 
 mtcars%>%
