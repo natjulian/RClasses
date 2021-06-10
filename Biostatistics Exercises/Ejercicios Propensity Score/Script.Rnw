@@ -1,0 +1,224 @@
+\documentclass[11pt,onside]{article}
+\usepackage[a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lipsum}
+\usepackage{bm}
+%%\usepackage{upgreek}
+
+\usepackage{amsmath}
+% mathtools for: Aboxed (put box on last equation in align envirenment)
+\usepackage{microtype} %improves the spacing between words and letters
+
+%% COLOR DEFINITIONS
+
+\usepackage[svgnames]{xcolor} % Enabling mixing colors and color's call by 'svgnames'
+
+\definecolor{MyColor1}{rgb}{0.2,0.4,0.6} %mix personal color
+\newcommand{\textb}{\color{Black} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\blue}{\color{MyColor1} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\blueb}{\color{MyColor1} \usefont{OT1}{lmss}{b}{n}}
+\newcommand{\red}{\color{LightCoral} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\green}{\color{Turquoise} \usefont{OT1}{lmss}{m}{n}}
+
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\diag}{diag}
+
+%% FONTS AND COLORS
+
+%    SECTIONS
+
+\usepackage{titlesec}
+\usepackage{sectsty}
+%%%%%%%%%%%%%%%%%%%%%%%%
+%set section/subsections HEADINGS font and color
+\sectionfont{\color{MyColor1}}  % sets colour of sections
+\subsectionfont{\color{MyColor1}}  % sets colour of sections
+
+%set section enumerator to arabic number (see footnotes markings alternatives)
+\renewcommand\thesection{\arabic{section}.} %define sections numbering
+\renewcommand\thesubsection{\thesection\arabic{subsection}} %subsec.num.
+
+%define new section style
+\newcommand{\mysection}{
+\titleformat{\section} [runin] {\usefont{OT1}{lmss}{b}{n}\color{MyColor1}} 
+{\thesection} {5pt} {} } 
+
+
+%	CAPTIONS
+\usepackage{caption}
+\usepackage{subcaption}
+%%%%%%%%%%%%%%%%%%%%%%%%
+\captionsetup[figure]{labelfont={color=Turquoise}}
+
+
+%		!!!EQUATION (ARRAY) --> USING ALIGN INSTEAD
+%using amsmath package to redefine eq. numeration (1.1, 1.2, ...) 
+\renewcommand{\theequation}{\thesection\arabic{equation}}
+
+
+
+\makeatletter
+\let\reftagform@=\tagform@
+\def\tagform@#1{\maketag@@@{(\ignorespaces\textcolor{red}{#1}\unskip\@@italiccorr)}}
+\renewcommand{\eqref}[1]{\textup{\reftagform@{\ref{#1}}}}
+\makeatother
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}
+
+% For labeling top of page on every page but first one:
+\usepackage{fancyhdr}
+
+% PREPARE TITLE:
+\title{\blue Biostatistics Exercises \\
+\blueb www.nataliejulian.com}
+\author{Natalie Julian}
+\date{} % You can set the date automatically by replacing "date goes here" with "\today"
+
+\renewcommand{\rmdefault}{phv} % Arial Font
+\renewcommand{\sfdefault}{phv} % Arial Font
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[CO,CE]{{\small{{\bf{www.nataliejulian.com}}}}}
+ 
+
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\maketitle
+
+\subsection*{Propensity Score}
+
+La base de datos \texttt{prop\_score.txt} contiene información sobre una campaña realizada para promocionar la compra de un artículo. La variable sent contiene información referente a si a la persona se le envió un email informando sobre la promoción (1=Sí y 0=No) y la variable bought contiene información referente a si la persona compró o no el artículo (1=Sí y 0=No).
+
+Considere como variable respuesta, $Y$, la variable bought, como variable de asignación de tratamiento, $Z$, la variable sent y como covariable, $X$, la variable Income (valor estandarizado del ingreso).
+
+\begin{itemize}
+
+\item[a)] Utilice regresión logística y estime $E(Y\vert X,Z=0)$, $E(Y\vert X,Z=1)$ y los propensity score para cada individuo. Con las cantidades anteriores, grafique $(X,\widehat{E(Y\vert X)})$ considerando el propensity score.
+
+
+Hint: Si $Z$ es una partición del espacio muestral, entonces:
+$$E(Y\vert X)=\sum\limits_zE(Y\vert X,Z=z)P(Z=z\vert X)$$
+
+
+<<include=FALSE>>=
+library(readr)
+prop_score <- read_table2("prop_score.txt")
+
+names(prop_score)<-c("income","sent","bought")
+@
+
+<<>>=
+table(prop_score$bought)  #No hay ninguna categoría mucho más grande que la otra
+@
+
+La variable de asignación de tratamientos es $Z$ si se le envió o no un e-mail informando sobre la promoción. Es necesario estimar para cada una de las observaciones, el \textit{propensity score} es decir, la probabilidad de que dicho cliente fuera "tratado" (i.e se le haya enviado un email) $P(Z=1|X)$:
+
+
+<<>>=
+prop_score$sent2<-factor(prop_score$sent)  #Se definen como factores
+prop_score$bought2<-factor(prop_score$bought)
+
+prop.score <- glm(sent2 ~ income,family = binomial,data = prop_score)
+
+#probabilidad que le sea aplicado tratamiento dada la covariable:
+PZ1 <- exp(coef(prop.score)[1]+
+                   coef(prop.score)[2]*prop_score$income)/(1+
+exp(coef(prop.score)[1]+coef(prop.score)[2]*prop_score$income)) 
+
+#probabilidad que no sea tratamiento, i.e sea control dada la covariable
+PZ0<-1-PZ1  
+@
+
+Ahora necesitamos obtener $E(Y\vert X,Z=0)$, es decir dado que fue control, entregar una estimación de la probabilidad de que compre el producto
+
+<<>>=
+
+library(dplyr)
+
+datacontrol<-prop_score%>%filter(sent=="0")
+
+modcontrol<-glm(bought2 ~ income,family = binomial,
+                data = datacontrol)
+
+coef(modcontrol)
+
+#Probabilidades de que compren dada la covariable para el grupo control
+PYcontrol<-exp(coef(modcontrol)[1]+
+                       coef(modcontrol)[2]*prop_score$income)/(1+
+exp(coef(modcontrol)[1]+ coef(modcontrol)[2]*prop_score$income)) 
+
+@
+
+Ahora necesitamos obtener $E(Y\vert X,Z=1)$, es decir dado que fue tratado, entregar una estimación de la probabilidad de que compre el producto:
+
+<<>>=
+datatrat<-prop_score%>%filter(sent=="1")
+
+modtrat<-glm(bought2 ~ income,family = binomial, 
+             data = datatrat)
+
+coef(modtrat)
+
+#Probabilidades de que compren dada la covariable para el grupo tratamiento
+PYtrat<-exp(coef(modtrat)[1]+
+                    coef(modtrat)[2]*prop_score$income)/(1+exp(coef(modtrat)[1]+
+coef(modtrat)[2]*prop_score$income)) 
+
+@
+
+Ya que tenemos $P(Z=z|X)$ (probabilidad de que el individuo en base a sus características de Income haya sido tratamiento o control), $E(Y\vert X,Z=0)$ que dado que $Y$ es compra o no compra (es decir, es una variable de naturaleza Bernoulli) consiste en la probabilidad de que compre el producto dado $X$ y dado $Z=0$ (es decir, que fue control) y asimismo, ya quemos calculado  $E(Y\vert X,Z=1)$ i.e la probabilidad de que compre el producto dado $X$ y dado $Z=1$ (es decir, que fue tratado), podemos obtener $E(Y|X)$ utilizando el hint como sigue:
+
+<<>>=
+
+#E(Y|X,Z=1)*P(Z=1)+E(Y|X,Z=0)*P(Z=0) para cada observacion Y bernoulli
+
+EYX<-PYtrat*PZ1+PYcontrol*PZ0  
+
+summary(EYX)
+
+@
+
+
+Gráfico ordenado por Income:
+
+<<fig.height=4, fig.width=7>>=
+
+attach(prop_score)
+
+#Grafico:
+
+plot(income[order(income)], EYX[order(income)], 
+     type="o", 
+     xlab="Ingreso estandarizado", 
+     ylab="Probabilidad", 
+     main="Probabilidad vía propensity score de que la persona compre el producto", 
+     pch=19, 
+     col="lightsteelblue")  
+
+@
+
+\item[b)]  Sin considerar la descomposición anterior, estime $E(Y\vert X)$ mediante regresión logística y grafique $(X,\widehat{E(Y\vert X)})$. Discuta la ventaja de utilizar propensity scores para la estimación de $E(Y\vert X)$. 
+
+
+Omitiendo la información de si se le aplicó o no tratamiento a los clientes, se puede establecer una regresión logística usual:
+
+<<fig.height=4>>=
+logist<-glm(bought2 ~ income,family = binomial,data = prop_score)
+
+plot(income[order(income)], logist$fitted.values[order(income)], 
+     type="o", 
+     xlab="Ingreso estandarizado", 
+     ylab="Probabilidad", 
+     main="Probabilidad de que la persona compre el producto", 
+     pch=19, 
+     col="lightsteelblue")  
+@
+
+Es posible observar que al no considerar el factor tratamiento, es posible llegar a conclusiones muy diferentes, sobretodo en torno a la probabilidad 0.5, donde al omitir información de $Z$ se asume la misma velocidad hacia la probabilidad 1 de adquirir el producto que a la probabilidad 0 de adquirir el producto (es decir, utilizando una regresión logística directamente se establece simetría en el valor de probabilidad 0.5, la que considerando mayor información claramente no existiría). Es evidente que no puede asumirse un mismo comportamiento en términos de comprar o no el producto para aquellos clientes que recibieron un email y para aquellos que no, dicha información \textbf{debe} considerarse en el modelamiento, y es precisamente esa la idea del propensity score, manejar ese sesgo en los resultados, producidos por la variable tratamiento aplicado a las unidades experimentales.
+\end{itemize}
+
+\end{document}

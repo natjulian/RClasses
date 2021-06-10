@@ -628,7 +628,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <17.28> not available
 (Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 92.
 LaTeX Font Info:    Trying to load font information for T1+aett on input line 9
-6.
+5.
 
 (c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
@@ -637,18 +637,6 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `aett' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for TS1+aer on input line 1
-00.
-
-(c:/Program Files/R/R-4.0.5/share/texmf/tex/latex/ts1aer.fd
-File: ts1aer.fd 
-)
-LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <10.95> not available
-(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 100.
-
-Underfull \hbox (badness 10000) in paragraph at lines 134--135
-
- []
 
 [1
 
@@ -673,215 +661,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [3]
 
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[4]
-Overfull \hbox (47.53621pt too wide) in paragraph at lines 255--259
-[]$[][]$ 
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[5]
-LaTeX Font Info:    Trying to load font information for TS1+aett on input line 
-286.
- (c:/Program Files/R/R-4.0.5/share/texmf/tex/latex/ts1aett.fd
-File: ts1aett.fd 
-)
-LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
-286.
-
-(c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ts1cmtt.fd
-File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `TS1/aett/m/n' in size <10.95> not available
-(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 286.
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `cmtt' (encoding: TS1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[6]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[7]
-Overfull \hbox (15.92372pt too wide) detected at line 390
-\OML/cmm/m/it/10.95 H[] \OT1/cmr/m/n/10.95 : []  \OML/cmm/m/it/10.95 ^^R \OT1/c
-mr/m/n/10.95 = \OML/cmm/m/it/10.95 ^^R[]   H[] \OT1/cmr/m/n/10.95 : []  \OML/cm
-m/m/it/10.95 ^^R \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 ^^R[]
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 454--455
-
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[9]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[10]
-LaTeX Font Info:    Font shape `TS1/aett/m/sl' in size <10.95> not available
-(Font)              Font shape `TS1/cmtt/m/sl' tried instead on input line 529.
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[11]
-Overfull \hbox (32.74734pt too wide) detected at line 582
-\OML/cmm/m/it/10.95 X^^L \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 ^^L[] \OT1/cm
-r/m/n/10.95 + \OML/cmm/m/it/10.95 ^^L[]AGE \OT1/cmr/m/n/10.95 + \OML/cmm/m/it/1
-0.95 ^^L[][][] \OT1/cmr/m/n/10.95 + \OML/cmm/m/it/10.95 ^^L[][][] \OT1/cmr/m/n/
-10.95 + \OML/cmm/m/it/10.95 ^^L[][][] \OT1/cmr/m/n/10.95 + \OML/cmm/m/it/10.95 
-^^L[][][] \OT1/cmr/m/n/10.95 + \OML/cmm/m/it/10.95 ^^L[][][]
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[12]
-Overfull \hbox (79.3561pt too wide) detected at line 631
-\OT1/cmr/m/n/10.95 3\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 51 \OMS/cmsy/m/n/10
-.95 ^^@ \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 02 \OMS/cms
-y/m/n/10.95 ^^A \OML/cmm/m/it/10.95 AGE \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/10
-.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 24 \OMS/cmsy/m/n/10.95 ^^A [][] ^^
-@ \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 64 \OMS/cmsy/m/n/
-10.95 ^^A [][] ^^@ \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 
-68 \OMS/cmsy/m/n/10.95 ^^A [][] \OT1/cmr/m/n/10.95 + 0\OML/cmm/m/it/10.95 :\OT1
-/cmr/m/n/10.95 95 \OMS/cmsy/m/n/10.95 ^^A [][] ^^@ \OT1/cmr/m/n/10.95 0\OML/cmm
-/m/it/10.95 :\OT1/cmr/m/n/10.95 25 \OMS/cmsy/m/n/10.95 ^^A [][]
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[13]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[14]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[15]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[16]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[17]
-Underfull \hbox (badness 10000) in paragraph at lines 912--913
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 943--944
-
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[18]
-Underfull \hbox (badness 10000) in paragraph at lines 961--962
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 987--988
-
- []
-
-
 Package caption Warning: Unused \captionsetup[figure] on input line 52.
 See the caption package documentation for explanation.
 
@@ -893,44 +672,37 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[19] (./Script.aux)
+[4] (./Script.aux)
 Package rerunfilecheck Info: File `Script.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 15084 strings out of 480476
- 235688 string characters out of 5897039
- 695142 words of memory out of 5000000
- 32105 multiletter control sequences out of 15000+600000
- 466262 words of font info for 376 fonts, out of 8000000 for 9000
+ 14841 strings out of 480476
+ 232830 string characters out of 5897039
+ 693154 words of memory out of 5000000
+ 32046 multiletter control sequences out of 15000+600000
+ 450441 words of font info for 233 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,11n,80p,959b,611s stack positions out of 5000i,500n,10000p,200000b,80000s
- <c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec
-/tcst1095.600pk> <c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfo
-ur/jknappen/ec/tctt1095.600pk> <c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-var
-/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk>{c:/Users/Naty/AppData/Roaming/Tiny
-TeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}<c:/Users/Naty/AppData/Roaming/Tiny
-TeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb><c:/Users/Naty/AppData/
-Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/Users/
-Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cmextra/cme
-x8.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmmi6.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/Users/Naty/AppData/Roaming/Tiny
-TeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/Naty/AppData/
-Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/Users/Na
-ty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><
-c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmsltt10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmsy10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy8.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/Users/Naty/AppData/Roam
-ing/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss17.pfb><c:/Users/Naty/AppData/
-Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb>
-Output written on Script.pdf (19 pages, 261402 bytes).
+ 72i,11n,80p,956b,604s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.en
+c}<c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmb10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmex10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/Users/Naty/AppData/Roam
+ing/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/Naty/
+AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:
+/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/c
+msltt10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmsy10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/font
+s/type1/public/amsfonts/cm/cmti10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/Users/Naty/AppData/Roami
+ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss17.pfb><c:/Users/Naty/AppData/R
+oaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb>
+Output written on Script.pdf (4 pages, 167137 bytes).
 PDF statistics:
- 189 PDF objects out of 1000 (max. 8388607)
- 132 compressed objects within 2 object streams
- 23 named destinations out of 1000 (max. 500000)
- 72197 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 88 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
+ 6 named destinations out of 1000 (max. 500000)
+ 70661 words of extra memory for PDF output out of 74296 (max. 10000000)
 
