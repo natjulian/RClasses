@@ -1,0 +1,221 @@
+\documentclass[11pt,onside]{article}
+\usepackage[a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lipsum}
+\usepackage{bm}
+%%\usepackage{upgreek}
+
+\usepackage{amsmath}
+% mathtools for: Aboxed (put box on last equation in align envirenment)
+\usepackage{microtype} %improves the spacing between words and letters
+
+%% COLOR DEFINITIONS
+
+\usepackage[svgnames]{xcolor} % Enabling mixing colors and color's call by 'svgnames'
+
+\definecolor{MyColor1}{rgb}{0.2,0.4,0.6} %mix personal color
+\newcommand{\textb}{\color{Black} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\blue}{\color{MyColor1} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\blueb}{\color{MyColor1} \usefont{OT1}{lmss}{b}{n}}
+\newcommand{\red}{\color{LightCoral} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\green}{\color{Turquoise} \usefont{OT1}{lmss}{m}{n}}
+
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\diag}{diag}
+
+%% FONTS AND COLORS
+
+%    SECTIONS
+
+\usepackage{titlesec}
+\usepackage{sectsty}
+%%%%%%%%%%%%%%%%%%%%%%%%
+%set section/subsections HEADINGS font and color
+\sectionfont{\color{MyColor1}}  % sets colour of sections
+\subsectionfont{\color{MyColor1}}  % sets colour of sections
+
+%set section enumerator to arabic number (see footnotes markings alternatives)
+\renewcommand\thesection{\arabic{section}.} %define sections numbering
+\renewcommand\thesubsection{\thesection\arabic{subsection}} %subsec.num.
+
+%define new section style
+\newcommand{\mysection}{
+\titleformat{\section} [runin] {\usefont{OT1}{lmss}{b}{n}\color{MyColor1}} 
+{\thesection} {5pt} {} } 
+
+
+%	CAPTIONS
+\usepackage{caption}
+\usepackage{subcaption}
+%%%%%%%%%%%%%%%%%%%%%%%%
+\captionsetup[figure]{labelfont={color=Turquoise}}
+
+
+%		!!!EQUATION (ARRAY) --> USING ALIGN INSTEAD
+%using amsmath package to redefine eq. numeration (1.1, 1.2, ...) 
+\renewcommand{\theequation}{\thesection\arabic{equation}}
+
+
+
+\makeatletter
+\let\reftagform@=\tagform@
+\def\tagform@#1{\maketag@@@{(\ignorespaces\textcolor{red}{#1}\unskip\@@italiccorr)}}
+\renewcommand{\eqref}[1]{\textup{\reftagform@{\ref{#1}}}}
+\makeatother
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}
+
+% For labeling top of page on every page but first one:
+\usepackage{fancyhdr}
+
+% PREPARE TITLE:
+\title{\blue Biostatistics Exercises \\
+\blueb www.nataliejulian.com}
+\author{}
+\date{} % You can set the date automatically by replacing "date goes here" with "\today"
+
+\renewcommand{\rmdefault}{phv} % Arial Font
+\renewcommand{\sfdefault}{phv} % Arial Font
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[CO,CE]{{\small{{\bf{www.nataliejulian.com}}}}}
+ 
+
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\maketitle
+
+\section*{Scoring}
+
+Las bases de datos \texttt{score\_train.txt} y \texttt{score\_test.txt} contienen información sobre la adherencia que tiene un grupo de pacientes respecto a cierto tratamiento (es decir, qué tan responsables son para seguir un tratamiento médico, especialmente cuando se les asignan medicamentos). Una compañía farmacéutica está interesada en entregar un programa completo de medicamentos a pacientes que adhieren de buena manera al tratamiento. Suponga que existen 5 covariables que definen el perfil de adherencia y la variable respuesta es adherencia (1 si tiene un historial positivo de adherencia al tratamiento, 0 si no).
+
+Suponga que la compañía farmacéutica le encarga a usted evaluar a individuos de la base de datos \texttt{score\_test.txt}. Usted debe asignar un puntaje de adherencia a cada individuo y decidir si se le otorgará el programa de medicamentos, tal que si el puntaje de adherencia del individuo es menor al puntaje de corte, entonces no se otorga el programa, y, en caso contrario, sí se otorga. Para decidir, realice lo siguiente:
+
+\begin{itemize}
+\item[a)] Ajuste una regresión logística con los datos de entrenamiento. Considere adherencia como variable respuesta y el resto como variables explicativas.
+
+
+<<echo=FALSE, message=FALSE>>=
+library(readr)
+score_train <- read_table2("score_train.txt")
+
+str(score_train)
+
+names(score_train)<-c("adherencia",
+                      paste("x", 1:5, sep=""))
+
+
+@
+
+<<>>=
+score_train$adhind<-factor(ifelse(score_train$adherencia==TRUE, "1","0"))
+
+score<-glm(adhind ~ ., family = binomial,data = score_train[,-1])
+
+summary(score)  #Todas las variables son significativas
+@
+
+\item[b)] Con los datos de testeo encuentre el puntaje de corte bajo el criterio \textit{Distance to corner}. Este criterio está basado en la distancia a la esquina superior izquierda de la curva ROC y está definido para cada punto de corte. La Distance to the corner está definida como
+
+$$d=\sqrt{(1-sensitivity)^2+(1-specificity)^2}$$
+
+El punto de corte que minimice esta distancia será considerado como puntaje de corte para otorgar el programa de medicamentos. Explique, con sus palabras, por qué este criterio puede ser considerado como un punto de corte para el puntaje de adherencia.
+
+<<echo=FALSE>>=
+library(readr)
+score_test <- read_table2("score_test.txt")
+
+names(score_test)<-c("adherencia",
+                     paste("x", 1:5, sep=""))
+
+@
+
+Esta forma de calcular el punto de corte puede ser utilizado porque la minimización de la funcion \textit{Distance to corner} pone en juego tanto la sensibilidad como la especificidad y además la sensibilidad y especificidad se encuentran en el intervalo [0,1] al ser tasas, por lo que el punto de corte caerá dentro del intervalo [0,1]:
+
+
+<<fig.align='center', fig.width=6, fig.height=5>>=
+distancecorner <- function (x, y) {
+   sqrt(((1-x)^2 + (1-y)^2)) }
+
+x <- seq(0, 1, length= 30)
+y <- x
+
+z <- outer(x, y, distancecorner)
+
+persp(x, y, z, main="Distance to corner y punto óptimo",
+zlab = "Distance ro Corner", xlab="Especificidad", 
+ylab="Sensibilidad",
+theta = -20, phi = 0, col = "orchid", shade = 0.5, d=0.1)
+@
+
+
+Cálculo del punto de corte:
+
+<<>>=
+score_test$adhind<-factor(ifelse(score_test$adherencia==TRUE, "1","0"))
+
+Matrix<-cbind(score_test[, 2:6])
+
+pred<-exp(coef(score)[1]+coef(score)[2]*Matrix[,2]+
+            coef(score)[3]*Matrix[,3]+coef(score)[4]*Matrix[,4]+
+            coef(score)[5]*Matrix[,5])/(1+exp(coef(score)[1]+
+                                                coef(score)[2]*Matrix[,2]+ 
+            coef(score)[3]*Matrix[,3]+coef(score)[4]*Matrix[,4]+
+            coef(score)[5]*Matrix[,5]))
+
+#Tomaré una secuencia del punto de corte
+
+secuencia<-seq(0,1, by=0.005)
+
+Sens<-rep(0, length(secuencia))
+Esp<-rep(0, length(secuencia))
+
+for(i in 1:length(secuencia)){
+  values<-factor(ifelse(pred<secuencia[i], "0","1"))
+  
+  datos<-as.vector(table(values,score_test$adhind))
+  Sens[i]<-datos[4]/(datos[4]+datos[3])
+  Esp[i]<-datos[1]/(datos[1]+datos[2])}
+
+
+d<-cbind(secuencia, Sens, Esp, sqrt((1-Sens)^{2}+(1-Esp)^{2}))
+
+colnames(d)<-c("d","Sensibilidad","Especificidad", "Corner")
+
+head(d[order(d[,4]),],10)
+
+
+d[which(d[,4]==min(d[,4], na.rm=TRUE)),] #Se pudiera elegir cualquiera
+
+(puntodecorte<-unname(d[which.min(d[,4]),1])) 
+
+@
+
+
+\item[c)] Con el punto de corte encontrado en 2., decida a qué individuos les otorgaría el programa y a cuáles no. Para mostrar los individuos a los cuáles les otorgaría el programa, defina una nueva columna en la base de datos \texttt{score\_test.txt} tal que 1=Se otorgará programa y 0=No se otorgará programa (La base de datos con dicha columna creada es parte de la entrega de la tarea.)
+
+<<>>=
+score_test$Decision<-factor(ifelse(pred<puntodecorte, "0","1"))
+
+# 0: No se entrega programa si prob<punto de corte
+
+# 1: Se otorgara programa si prob>= punto de corte
+
+head(score_test)
+
+table(score_test$Decision)
+#De los 300 pacientes a 160 se le otorga el programa.
+
+
+write.csv(score_test, "score_test2.csv", row.names = FALSE)  
+#Base de datos con decision
+@
+
+\end{itemize}
+
+
+\end{document}

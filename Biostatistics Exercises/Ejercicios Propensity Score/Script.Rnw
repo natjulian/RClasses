@@ -72,7 +72,7 @@
 % PREPARE TITLE:
 \title{\blue Biostatistics Exercises \\
 \blueb www.nataliejulian.com}
-\author{Natalie Julian}
+\author{}
 \date{} % You can set the date automatically by replacing "date goes here" with "\today"
 
 \renewcommand{\rmdefault}{phv} % Arial Font
@@ -89,7 +89,7 @@
 
 \maketitle
 
-\subsection*{Propensity Score}
+\section*{Propensity Score}
 
 La base de datos \texttt{prop\_score.txt} contiene información sobre una campaña realizada para promocionar la compra de un artículo. La variable sent contiene información referente a si a la persona se le envió un email informando sobre la promoción (1=Sí y 0=No) y la variable bought contiene información referente a si la persona compró o no el artículo (1=Sí y 0=No).
 

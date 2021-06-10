@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.10)  10 JUN 2021 14:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.10)  10 JUN 2021 14:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -637,11 +637,75 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `aett' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 114.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
+14.
+
+(c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
+114.
+
+(c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 114.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 115.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 115.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 116.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 116.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 117.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 117.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 118.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 118.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 119.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family aett in TS1 encoding.
+(textcomp)             Default family used instead on input line 119.
 
 [1
 
 {c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex
 .map}]
+LaTeX Font Info:    Trying to load font information for TS1+aett on input line 
+148.
+ (c:/Program Files/R/R-4.0.5/share/texmf/tex/latex/ts1aett.fd
+File: ts1aett.fd 
+)
+LaTeX Font Info:    Font shape `TS1/aett/m/n' in size <10.95> not available
+(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 148.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -661,6 +725,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [3]
 
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[4]
+
 Package caption Warning: Unused \captionsetup[figure] on input line 52.
 See the caption package documentation for explanation.
 
@@ -672,36 +745,37 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[4] (./Script.aux)
+[5] (./Script.aux)
 Package rerunfilecheck Info: File `Script.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 14827 strings out of 480476
- 232736 string characters out of 5897039
+ 14838 strings out of 480476
+ 233954 string characters out of 5897039
  692140 words of memory out of 5000000
- 32048 multiletter control sequences out of 15000+600000
- 451116 words of font info for 226 fonts, out of 8000000 for 9000
+ 32093 multiletter control sequences out of 15000+600000
+ 448343 words of font info for 202 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,11n,80p,956b,607s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.en
-c}<c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmb10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmex10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/Users/Naty/AppData/Roam
-ing/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/Naty/
-AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb>
-<c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmti10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmtt10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/t
-exmf-dist/fonts/type1/public/lm/lmss17.pfb><c:/Users/Naty/AppData/Roaming/TinyT
-eX/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb>
-Output written on Script.pdf (4 pages, 157862 bytes).
+ 72i,12n,80p,723b,599s stack positions out of 5000i,500n,10000p,200000b,80000s
+ <c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec
+/tctt1095.600pk>{c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvi
+ps/lm/lm-rm.enc}<c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmb10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmex10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/Naty/AppData/Ro
+aming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/Nat
+y/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c
+:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsltt10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsy10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmti10.pfb><c:/Users/Naty/AppData/Roaming/TinyTeX/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/Users/Naty/AppData/Roam
+ing/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss17.pfb><c:/Users/Naty/AppData/
+Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb>
+Output written on Script.pdf (5 pages, 164535 bytes).
 PDF statistics:
- 83 PDF objects out of 1000 (max. 8388607)
- 53 compressed objects within 1 object stream
- 6 named destinations out of 1000 (max. 500000)
- 62981 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 95 PDF objects out of 1000 (max. 8388607)
+ 62 compressed objects within 1 object stream
+ 7 named destinations out of 1000 (max. 500000)
+ 53765 words of extra memory for PDF output out of 61914 (max. 10000000)
 
