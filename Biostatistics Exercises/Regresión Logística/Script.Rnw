@@ -576,9 +576,10 @@ AIC(modsign,model2)
 # muy grande en términos de bondad de ajuste
 @
 
-<<include=FALSE, echo=FALSE>>=
+<<include=FALSE>>=
 library(xtable)
 
+#Tenemos el código de LaTex de la tabla con el paquete xtable
 xtable(modsign)
 @
 
