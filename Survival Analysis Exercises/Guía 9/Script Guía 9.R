@@ -1,5 +1,3 @@
-###### AYUDANTÍA 9 - ANÁLISIS DE SOBREVIVENCIA
-
 library(readr)
 mortgage <- read_csv(file.choose())
 
