@@ -1,5 +1,3 @@
-###### ESTRUCTURACIÓN DE LA DATA
-
 #############
 ###LIBRERÍAS
 
