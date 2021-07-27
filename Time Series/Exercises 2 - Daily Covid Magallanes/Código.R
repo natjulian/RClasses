@@ -71,7 +71,7 @@ casos_ts <- ts(data$Casos_Magallanes,
 
 #Opción 1 (No muestra detalle de fechas)
 autoplot(casos_ts) +
-  ggplot2::theme_light()
+  theme_light()
 
 #Opción 2: (Muestra más detalle)
 ggplot() +
