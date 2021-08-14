@@ -3,7 +3,7 @@
 #Carga la data
 
 library(readxl)
-potencial <- read_excel("C:/Users/HP/Desktop/Minería de Datos/Control 2 - Arboles de decisión 11 de Junio/potencial.xlsx")
+potencial <- read_excel("potencial.xlsx")
 
 print(potencial)
 
